@@ -12,10 +12,10 @@ class SignInActivity : AppCompatActivity() {
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupSignUpListener()
+        setupNavigateToSignUpListener()
     }
 
-    private fun setupSignUpListener() {
+    private fun setupNavigateToSignUpListener() {
         binding.viewSignInSignUpButton.setOnClickListener {
             val intent = SignUpActivity.newIntent(this)
             startActivity(intent)
