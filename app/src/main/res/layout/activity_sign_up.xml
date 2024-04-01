@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="30dp">
+
+    <TextView
+        android:id="@+id/tvSignUpTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:gravity="center"
+        android:text="Sign Up 🎉"
+        android:textAppearance="@style/headline1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlSignUpId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:hint="Username"
+        app:hintTextAppearance="@style/title1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSignUpTitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSignUpId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/title1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlSignUpPw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:hint="Password"
+        app:hintTextAppearance="@style/title1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tlSignUpId">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSignUpPw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/title1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlSignUpNickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:hint="Nickname"
+        app:hintTextAppearance="@style/title1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tlSignUpPw">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSignUpNickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/title1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvSignUpDrinkCapacity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="32dp"
+        android:text="Drink Capacity"
+        android:textAppearance="@style/title1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tlSignUpNickname" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderSignUpDrinkCapacity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stepSize="1.0"
+        android:valueFrom="0.0"
+        android:valueTo="12.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSignUpDrinkCapacity"
+        app:thumbColor="@color/main"
+        app:trackColorActive="@color/main"
+        app:trackHeight="18dp" />
+
+
+    <View
+        android:id="@+id/viewSignUpButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_default_radius_8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sliderSignUpDrinkCapacity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:textAppearance="@style/title1"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/viewSignUpButton"
+        app:layout_constraintEnd_toEndOf="@id/viewSignUpButton"
+        app:layout_constraintStart_toStartOf="@id/viewSignUpButton"
+        app:layout_constraintTop_toTopOf="@id/viewSignUpButton" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
