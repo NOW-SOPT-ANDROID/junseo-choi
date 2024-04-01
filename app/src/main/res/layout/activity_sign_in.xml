@@ -59,7 +59,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <View
-        android:id="@+id/btnSignInButton"
+        android:id="@+id/viewSignInButton"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="32dp"
@@ -74,14 +74,14 @@
         android:text="Sign In"
         android:textAppearance="@style/title1"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/btnSignInButton"
-        app:layout_constraintEnd_toEndOf="@id/btnSignInButton"
-        app:layout_constraintStart_toStartOf="@id/btnSignInButton"
-        app:layout_constraintTop_toTopOf="@id/btnSignInButton" />
+        app:layout_constraintBottom_toBottomOf="@id/viewSignInButton"
+        app:layout_constraintEnd_toEndOf="@id/viewSignInButton"
+        app:layout_constraintStart_toStartOf="@id/viewSignInButton"
+        app:layout_constraintTop_toTopOf="@id/viewSignInButton" />
 
 
     <View
-        android:id="@+id/btnSignInSignUpButton"
+        android:id="@+id/viewSignInSignUpButton"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="32dp"
@@ -89,7 +89,7 @@
         android:backgroundTint="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnSignInButton" />
+        app:layout_constraintTop_toBottomOf="@id/viewSignInButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -97,10 +97,10 @@
         android:text="Sign Up"
         android:textColor="#324a66"
         android:textAppearance="@style/title1"
-        app:layout_constraintBottom_toBottomOf="@id/btnSignInSignUpButton"
-        app:layout_constraintEnd_toEndOf="@id/btnSignInSignUpButton"
-        app:layout_constraintStart_toStartOf="@id/btnSignInSignUpButton"
-        app:layout_constraintTop_toTopOf="@id/btnSignInSignUpButton" />
+        app:layout_constraintBottom_toBottomOf="@id/viewSignInSignUpButton"
+        app:layout_constraintEnd_toEndOf="@id/viewSignInSignUpButton"
+        app:layout_constraintStart_toStartOf="@id/viewSignInSignUpButton"
+        app:layout_constraintTop_toTopOf="@id/viewSignInSignUpButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
