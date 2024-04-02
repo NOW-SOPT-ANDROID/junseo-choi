@@ -7,7 +7,7 @@ import com.sopt.now.data.local.dao.UserInfoDao
 import com.sopt.now.data.local.database.UserDatabase
 import com.sopt.now.data.repository.UserRepository
 
-class NowSopt: Application() {
+class NowSopt : Application() {
     override fun onCreate() {
         super.onCreate()
         appContext = applicationContext
