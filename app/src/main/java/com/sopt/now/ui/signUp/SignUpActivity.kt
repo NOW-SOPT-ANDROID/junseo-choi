@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.sopt.now.R
 import com.sopt.now.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
@@ -38,32 +39,39 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.uiState.observe(this) { state ->
             when (state) {
                 SignUpUiState.UsernameError -> {
-                    binding.etSignUpUsername.error = "아이디는 6자 이상 10자 이하여야 합니다."
+                    binding.etSignUpUsername.error = getString(R.string.error_sign_up_username)
                 }
 
                 SignUpUiState.PasswordError -> {
-                    binding.etSignUpPassword.error = "비밀번호는 8자 이상 12자 이하여야 합니다."
+                    binding.etSignUpPassword.error = getString(R.string.error_sign_up_password)
                 }
 
                 SignUpUiState.NicknameError -> {
-                    binding.etSignUpNickname.error = "닉네임을 입력해주세요."
+                    binding.etSignUpNickname.error = getString(R.string.error_sign_up_nickname)
                 }
 
                 SignUpUiState.UsernameTaken -> {
-                    binding.etSignUpUsername.error = "이미 사용 중인 아이디입니다."
+                    binding.etSignUpUsername.error =
+                        getString(R.string.error_sign_up_username_taken)
                 }
 
                 SignUpUiState.NicknameTaken -> {
-                    binding.etSignUpNickname.error = "이미 사용 중인 닉네임입니다."
+                    binding.etSignUpNickname.error =
+                        getString(R.string.error_sign_up_nickname_taken)
                 }
 
                 SignUpUiState.Success -> {
-                    Toast.makeText(this, "회원가입에 성공하셨습니다!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.success_sign_up), Toast.LENGTH_SHORT)
+                        .show()
                     finish()
                 }
 
                 SignUpUiState.Failure -> {
-                    Snackbar.make(binding.root, "회원가입 오류입니다.", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.error_sign_up_failure),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
 
                 else -> {}

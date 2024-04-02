@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.sopt.now.R
 import com.sopt.now.databinding.ActivitySignInBinding
 import com.sopt.now.ui.main.MainActivity
 import com.sopt.now.ui.signUp.SignUpActivity
@@ -26,27 +27,32 @@ class SignInActivity : AppCompatActivity() {
         viewModel.uiState.observe(this) { state ->
             when (state) {
                 SignInUiState.UsernameBlank -> {
-                    binding.etSignInUsername.error = "아이디를 입력해주세요."
+                    binding.etSignInUsername.error =
+                        getString(R.string.error_sign_in_username_blank)
                 }
 
                 SignInUiState.PasswordBlank -> {
-                    binding.etSignInPassword.error = "비밀번호를 입력해주세요."
+                    binding.etSignInPassword.error =
+                        getString(R.string.error_sign_in_password_blank)
                 }
 
                 SignInUiState.UsernameWrong -> {
-                    binding.etSignInUsername.error = "존재하지 않는 아이디입니다."
+                    binding.etSignInUsername.error =
+                        getString(R.string.error_sign_in_username_wrong)
                 }
 
                 SignInUiState.PasswordWrong -> {
-                    binding.etSignInPassword.error = "비밀번호가 일치하지 않습니다."
+                    binding.etSignInPassword.error =
+                        getString(R.string.error_sign_in_password_wrong)
                 }
 
                 SignInUiState.Failure -> {
-                    binding.etSignInUsername.error = "로그인에 실패하였습니다."
+                    binding.etSignInUsername.error = getString(R.string.error_sign_in_failure)
                 }
 
                 SignInUiState.Success -> {
-                    Toast.makeText(this, "로그인에 성공하셨습니다!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.success_sign_in), Toast.LENGTH_SHORT)
+                        .show()
                     navigateToMainActivity()
                 }
 
