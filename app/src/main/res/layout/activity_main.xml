@@ -26,9 +26,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/tvMainTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NOW SOPT HOMEWORK"
+                android:text="@string/tv_main_title"
                 android:textAppearance="@style/headline1"
                 android:textColor="@color/white" />
         </com.google.android.material.appbar.AppBarLayout>
@@ -75,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:layout_marginTop="60dp"
-            android:text="USERNAME"
+            android:text="@string/tv_main_username_title"
             android:textAppearance="@style/title1"
             android:textColor="@color/primary"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:layout_marginTop="24dp"
-            android:text="PASSWORD"
+            android:text="@string/tv_main_password_title"
             android:textAppearance="@style/title1"
             android:textColor="@color/primary"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:layout_marginTop="24dp"
-            android:text="DRINK CAPACITY"
+            android:text="@string/tv_main_drink_capacity_title"
             android:textAppearance="@style/title1"
             android:textColor="@color/primary"
             app:layout_constraintStart_toStartOf="parent"
