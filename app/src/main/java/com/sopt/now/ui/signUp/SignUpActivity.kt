@@ -37,32 +37,32 @@ class SignUpActivity : AppCompatActivity() {
     private fun observeSignUpResult() {
         viewModel.uiState.observe(this) { state ->
             when (state) {
-                is SignUpUiState.UsernameError -> {
+                SignUpUiState.UsernameError -> {
                     binding.etSignUpUsername.error = "아이디는 6자 이상 10자 이하여야 합니다."
                 }
 
-                is SignUpUiState.PasswordError -> {
+                SignUpUiState.PasswordError -> {
                     binding.etSignUpPassword.error = "비밀번호는 8자 이상 12자 이하여야 합니다."
                 }
 
-                is SignUpUiState.NicknameError -> {
+                SignUpUiState.NicknameError -> {
                     binding.etSignUpNickname.error = "닉네임을 입력해주세요."
                 }
 
-                is SignUpUiState.UsernameTaken -> {
+                SignUpUiState.UsernameTaken -> {
                     binding.etSignUpUsername.error = "이미 사용 중인 아이디입니다."
                 }
 
-                is SignUpUiState.NicknameTaken -> {
+                SignUpUiState.NicknameTaken -> {
                     binding.etSignUpNickname.error = "이미 사용 중인 닉네임입니다."
                 }
 
-                is SignUpUiState.Success -> {
+                SignUpUiState.Success -> {
                     Toast.makeText(this, "회원가입에 성공하셨습니다!", Toast.LENGTH_SHORT).show()
                     finish()
                 }
 
-                is SignUpUiState.Failure -> {
+                SignUpUiState.Failure -> {
                     Snackbar.make(binding.root, "회원가입 오류입니다.", Snackbar.LENGTH_SHORT).show()
                 }
 
