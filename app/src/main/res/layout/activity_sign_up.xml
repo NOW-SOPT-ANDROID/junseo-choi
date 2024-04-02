@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tlSignUpId"
+        android:id="@+id/tlSignUpUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvSignUpTitle">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etSignUpId"
+            android:id="@+id/etSignUpUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/title1" />
@@ -40,7 +40,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tlSignUpPw"
+        android:id="@+id/tlSignUpPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -48,10 +48,10 @@
         app:hintTextAppearance="@style/title1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tlSignUpId">
+        app:layout_constraintTop_toBottomOf="@id/tlSignUpUsername">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etSignUpPw"
+            android:id="@+id/etSignUpPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -68,7 +68,7 @@
         app:hintTextAppearance="@style/title1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tlSignUpPw">
+        app:layout_constraintTop_toBottomOf="@id/tlSignUpPassword">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSignUpNickname"
