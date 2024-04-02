@@ -17,7 +17,7 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
     fun performSignUp(username: String, password: String, nickname: String, drinkCapacity: Int) {
         if (!checkUsernameValid(username)) return
         if (!checkPasswordValid(password)) return
-        if (!checkNicknameValid(nickname)) return
+        if (!checkNicknameNotBlank(nickname)) return
 
         checkUsernameTaken(username) {
             checkNicknameTaken(nickname) {
@@ -42,7 +42,7 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
         return true
     }
 
-    private fun checkNicknameValid(nickname: String): Boolean {
+    private fun checkNicknameNotBlank(nickname: String): Boolean {
         if (nickname.isBlank()) {
             _uiState.value = SignUpUiState.NicknameError
             return false
