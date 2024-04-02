@@ -14,7 +14,7 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
     private val _uiState = MutableLiveData<SignUpUiState>(SignUpUiState.Loading)
     val uiState: LiveData<SignUpUiState> = _uiState
 
-    fun performSignUp(username: String, password: String, nickname: String, drinkCapacity: Int) {
+    fun performSignUp(username: String, password: String, nickname: String, drinkCapacity: Float) {
         if (!checkUsernameValid(username)) return
         if (!checkPasswordValid(password)) return
         if (!checkNicknameNotBlank(nickname)) return
@@ -86,7 +86,7 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
         username: String,
         password: String,
         nickname: String,
-        drinkCapacity: Int
+        drinkCapacity: Float
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
@@ -95,6 +95,7 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
                 _uiState.postValue(SignUpUiState.Success)
             }.onFailure {
                 _uiState.postValue(SignUpUiState.Failure)
+                println("SignUpTest: ${it.message}")
             }
         }
     }

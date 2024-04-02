@@ -28,7 +28,7 @@ class SignUpActivity : AppCompatActivity() {
             val username = binding.etSignUpUsername.text.toString()
             val password = binding.etSignUpPassword.text.toString()
             val nickname = binding.etSignUpNickname.text.toString()
-            val drinkCapacity = binding.sliderSignUpDrinkCapacity.value.toInt()
+            val drinkCapacity = binding.sliderSignUpDrinkCapacity.value
 
             viewModel.performSignUp(username, password, nickname, drinkCapacity)
         }

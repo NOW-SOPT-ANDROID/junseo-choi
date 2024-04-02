@@ -21,4 +21,7 @@ interface UserInfoDao {
     @Query("SELECT COUNT(nickname) FROM user_table WHERE nickname = :nickname")
     fun countNickname(nickname: String): Int
 
+    @Query("SELECT * FROM user_table WHERE username = :username")
+    fun getUserInfo(username: String): UserInfoEntity
+
 }

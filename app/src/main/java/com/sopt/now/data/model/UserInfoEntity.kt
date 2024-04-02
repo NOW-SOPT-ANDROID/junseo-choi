@@ -10,5 +10,5 @@ data class UserInfoEntity(
     @ColumnInfo val username: String,
     @ColumnInfo val password: String,
     @ColumnInfo val nickname: String,
-    @ColumnInfo val drinkCapacity: Int,
+    @ColumnInfo val drinkCapacity: Float,
 )

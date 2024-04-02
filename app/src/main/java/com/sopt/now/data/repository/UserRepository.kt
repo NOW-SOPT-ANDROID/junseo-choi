@@ -9,8 +9,15 @@ class UserRepository(private val userInfoDao: UserInfoDao) {
         return userInfoDao.getPasswordByUsername(username)
     }
 
-    fun insertUser(username: String, password: String, nickname: String, drinkCapacity: Int) {
-        userInfoDao.insertUser(UserInfoEntity(username = username, password = password, nickname = nickname, drinkCapacity = drinkCapacity))
+    fun insertUser(username: String, password: String, nickname: String, drinkCapacity: Float) {
+        userInfoDao.insertUser(
+            UserInfoEntity(
+                username = username,
+                password = password,
+                nickname = nickname,
+                drinkCapacity = drinkCapacity
+            )
+        )
     }
 
     fun countUsername(username: String): Int {
@@ -19,6 +26,10 @@ class UserRepository(private val userInfoDao: UserInfoDao) {
 
     fun countNickname(nickname: String): Int {
         return userInfoDao.countNickname(nickname)
+    }
+
+    fun getUserInfo(username: String): UserInfoEntity {
+        return userInfoDao.getUserInfo(username)
     }
 
 }
