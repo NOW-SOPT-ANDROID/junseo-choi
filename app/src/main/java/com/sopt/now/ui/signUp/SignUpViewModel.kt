@@ -95,7 +95,6 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
                 _uiState.postValue(SignUpUiState.Success)
             }.onFailure {
                 _uiState.postValue(SignUpUiState.Failure)
-                println("SignUpTest: ${it.message}")
             }
         }
     }
