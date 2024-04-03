@@ -80,7 +80,6 @@
         app:layout_constraintStart_toStartOf="@id/viewSignInButton"
         app:layout_constraintTop_toTopOf="@id/viewSignInButton" />
 
-
     <View
         android:id="@+id/viewSignInSignUpButton"
         android:layout_width="match_parent"
@@ -103,6 +102,5 @@
         app:layout_constraintEnd_toEndOf="@id/viewSignInSignUpButton"
         app:layout_constraintStart_toStartOf="@id/viewSignInSignUpButton"
         app:layout_constraintTop_toTopOf="@id/viewSignInSignUpButton" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

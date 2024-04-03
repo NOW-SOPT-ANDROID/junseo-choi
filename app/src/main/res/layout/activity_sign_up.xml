@@ -37,7 +37,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tlSignUpPassword"
         android:layout_width="match_parent"
@@ -123,6 +122,5 @@
         app:layout_constraintEnd_toEndOf="@id/viewSignUpButton"
         app:layout_constraintStart_toStartOf="@id/viewSignUpButton"
         app:layout_constraintTop_toTopOf="@id/viewSignUpButton" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
