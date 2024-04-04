@@ -19,19 +19,18 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
+import com.sopt.now.compose.R
 import com.sopt.now.compose.feature.main.MainActivity
 import com.sopt.now.compose.feature.signUp.SignUpActivity
 import com.sopt.now.compose.feature.signUp.dataStore
 import com.sopt.now.compose.model.User
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-
-val Context.dataStore by preferencesDataStore(name = "userPreferences")
 
 @Composable
 fun SignInScreen() {
@@ -41,11 +40,11 @@ fun SignInScreen() {
     val coroutineScope = rememberCoroutineScope()
 
     Column(modifier = Modifier.padding(24.dp)) {
-        Text(text = "로그인")
+        Text(text = stringResource(id = R.string.sign_in_title))
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
-            label = { Text("아이디") },
+            label = { Text(stringResource(id = R.string.username_label)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
@@ -54,7 +53,7 @@ fun SignInScreen() {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("비밀번호") },
+            label = { Text(stringResource(id = R.string.password_label)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
@@ -65,14 +64,22 @@ fun SignInScreen() {
             onClick = {
                 coroutineScope.launch {
                     if (username.isBlank() || password.isBlank()) {
-                        Toast.makeText(context, "정보를 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.sign_in_blank_error),
+                            Toast.LENGTH_SHORT
+                        ).show()
                         return@launch
                     }
 
                     val userInfo = context.getUserInfo()
 
                     if (userInfo != null && userInfo.username == username && userInfo.password == password) {
-                        Toast.makeText(context, "로그인에 성공하셨습니다!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            context.getText(R.string.sign_in_success),
+                            Toast.LENGTH_SHORT
+                        ).show()
                         val intent = Intent(context, MainActivity::class.java).apply {
                             putExtra("username", username)
                         }
@@ -80,7 +87,11 @@ fun SignInScreen() {
                         val activity = (context as SignInActivity)
                         activity.finish()
                     } else {
-                        Toast.makeText(context, "회원 정보가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.user_info_not_match),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             },

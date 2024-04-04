@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,7 +50,7 @@ fun MainScreen(usernameFromSignIn: String) {
                 modifier = Modifier.size(200.dp)
             )
             Text(
-                text = "닉네임:",
+                text = stringResource(id = R.string.nickname_label),
                 fontSize = 25.sp,
                 fontWeight = Bold,
                 color = colorResource(id = R.color.purple_500),
@@ -61,7 +62,7 @@ fun MainScreen(usernameFromSignIn: String) {
                 modifier = Modifier.padding(top = 4.dp),
             )
             Text(
-                text = "아이디:",
+                text = stringResource(id = R.string.username_label),
                 fontSize = 25.sp,
                 fontWeight = Bold,
                 color = colorResource(id = R.color.purple_500),
@@ -73,7 +74,7 @@ fun MainScreen(usernameFromSignIn: String) {
                 modifier = Modifier.padding(top = 4.dp),
             )
             Text(
-                text = "닉네임:",
+                text = stringResource(id = R.string.password_label),
                 fontSize = 25.sp,
                 fontWeight = Bold,
                 color = colorResource(id = R.color.purple_500),
@@ -85,7 +86,7 @@ fun MainScreen(usernameFromSignIn: String) {
                 modifier = Modifier.padding(top = 4.dp)
             )
             Text(
-                text = "주량:",
+                text = stringResource(id = R.string.drink_capacity_label),
                 fontSize = 25.sp,
                 fontWeight = Bold,
                 color = colorResource(id = R.color.purple_500),

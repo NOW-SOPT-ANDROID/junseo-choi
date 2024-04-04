@@ -17,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.sopt.now.compose.R
 import com.sopt.now.compose.model.User
 import kotlinx.coroutines.launch
 
@@ -40,11 +42,11 @@ fun SignUpScreen() {
     val coroutineScope = rememberCoroutineScope()
 
     Column(modifier = Modifier.padding(24.dp)) {
-        Text(text = "회원가입")
+        Text(text = stringResource(id = R.string.sign_up_title))
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
-            label = { Text("아이디") },
+            label = { Text(stringResource(id = R.string.username_label)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
@@ -53,7 +55,7 @@ fun SignUpScreen() {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("비밀번호") },
+            label = { Text(stringResource(id = R.string.password_label)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
@@ -63,7 +65,7 @@ fun SignUpScreen() {
         OutlinedTextField(
             value = nickname,
             onValueChange = { nickname = it },
-            label = { Text("닉네임") },
+            label = { Text(stringResource(id = R.string.nickname_label)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
@@ -72,7 +74,7 @@ fun SignUpScreen() {
         OutlinedTextField(
             value = drinkCapacity,
             onValueChange = { drinkCapacity = it },
-            label = { Text("주량") },
+            label = { Text(stringResource(id = R.string.drink_capacity_label)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
@@ -86,32 +88,36 @@ fun SignUpScreen() {
                 when {
                     username.length !in 6..10 -> Toast.makeText(
                         context,
-                        "ID는 6~10 글자여야 합니다.",
+                        context.getString(R.string.username_error),
                         Toast.LENGTH_SHORT
                     ).show()
 
                     password.length !in 8..12 -> Toast.makeText(
                         context,
-                        "비밀번호는 8~12 글자여야 합니다.",
+                        context.getString(R.string.password_error),
                         Toast.LENGTH_SHORT
                     ).show()
 
                     nickname.isBlank() -> Toast.makeText(
                         context,
-                        "닉네임은 공백일 수 없습니다.",
+                        context.getString(R.string.nickname_error),
                         Toast.LENGTH_SHORT
                     ).show()
 
                     drinkCapacity.isBlank() -> Toast.makeText(
                         context,
-                        "주량을 입력해주세요.",
+                        context.getString(R.string.drink_capacity_error),
                         Toast.LENGTH_SHORT
                     ).show()
 
                     else -> {
                         val user = User(username, password, nickname, drinkCapacity.toFloat())
                         coroutineScope.launch { context.saveUserToPreferences(user) }
-                        Toast.makeText(context, "회원가입에 성공하셨습니다!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.sign_up_success),
+                            Toast.LENGTH_SHORT
+                        ).show()
                         val activity = (context as SignUpActivity)
                         activity.finish()
                     }
@@ -121,7 +127,7 @@ fun SignUpScreen() {
                 .fillMaxWidth()
                 .padding(top = 16.dp)
         ) {
-            Text("회원가입")
+            Text(stringResource(id = R.string.sign_up_button))
         }
     }
 }
