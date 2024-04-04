@@ -1,10 +1,10 @@
 package com.sopt.now.compose.feature.signIn
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.sopt.now.compose.feature.signUp.SignUpActivity
 
 @Composable
 fun SignInScreen() {
@@ -32,7 +33,7 @@ fun SignInScreen() {
             label = { Text("아이디") },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp),
+                .padding(top = 16.dp)
         )
         OutlinedTextField(
             value = password,
@@ -52,7 +53,10 @@ fun SignInScreen() {
             Text("로그인")
         }
         TextButton(
-            onClick = { /* 회원가입 이동 로직 */ },
+            onClick = {
+                val intent = Intent(context, SignUpActivity::class.java)
+                context.startActivity(intent)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp)
