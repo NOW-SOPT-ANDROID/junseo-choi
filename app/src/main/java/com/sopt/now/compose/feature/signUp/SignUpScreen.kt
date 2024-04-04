@@ -25,7 +25,6 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.sopt.now.compose.model.User
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 val Context.dataStore by preferencesDataStore(name = "userPreferences")
@@ -38,7 +37,7 @@ fun SignUpScreen() {
     var drinkCapacity by remember { mutableStateOf("") }
 
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
+    val coroutineScope = rememberCoroutineScope()
 
     Column(modifier = Modifier.padding(24.dp)) {
         Text(text = "회원가입")
@@ -111,7 +110,7 @@ fun SignUpScreen() {
 
                     else -> {
                         val user = User(username, password, nickname, drinkCapacity.toFloat())
-                        saveUserToPreferences(context, user, scope)
+                        coroutineScope.launch { context.saveUserToPreferences(user) }
                         Toast.makeText(context, "회원가입에 성공하셨습니다!", Toast.LENGTH_SHORT).show()
                         val activity = (context as SignUpActivity)
                         activity.finish()
@@ -127,18 +126,16 @@ fun SignUpScreen() {
     }
 }
 
-fun saveUserToPreferences(context: Context, user: User, scope: CoroutineScope) {
+suspend fun Context.saveUserToPreferences(user: User) {
     val usernameKey = stringPreferencesKey("username")
     val passwordKey = stringPreferencesKey("password")
     val nicknameKey = stringPreferencesKey("nickname")
     val drinkCapacityKey = stringPreferencesKey("drinkCapacity")
 
-    scope.launch {
-        context.dataStore.edit { preferences ->
-            preferences[usernameKey] = user.username
-            preferences[passwordKey] = user.password
-            preferences[nicknameKey] = user.nickname
-            preferences[drinkCapacityKey] = user.drinkCapacity.toString()
-        }
+    dataStore.edit { preferences ->
+        preferences[usernameKey] = user.username
+        preferences[passwordKey] = user.password
+        preferences[nicknameKey] = user.nickname
+        preferences[drinkCapacityKey] = user.drinkCapacity.toString()
     }
 }
