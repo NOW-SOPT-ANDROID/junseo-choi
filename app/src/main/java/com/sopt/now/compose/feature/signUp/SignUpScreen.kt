@@ -86,13 +86,13 @@ fun SignUpScreen() {
         Button(
             onClick = {
                 when {
-                    username.length !in 6..10 -> Toast.makeText(
+                    username.length !in MIN_USERNAME_LENGTH..MAX_USERNAME_LENGTH -> Toast.makeText(
                         context,
                         context.getString(R.string.username_error),
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    password.length !in 8..12 -> Toast.makeText(
+                    password.length !in MIN_PASSWORD_LENGTH..MAX_PASSWORD_LENGTH -> Toast.makeText(
                         context,
                         context.getString(R.string.password_error),
                         Toast.LENGTH_SHORT
@@ -131,6 +131,11 @@ fun SignUpScreen() {
         }
     }
 }
+
+private const val MIN_USERNAME_LENGTH = 6
+private const val MAX_USERNAME_LENGTH = 10
+private const val MIN_PASSWORD_LENGTH = 8
+private const val MAX_PASSWORD_LENGTH = 12
 
 suspend fun Context.saveUserToPreferences(user: User) {
     val usernameKey = stringPreferencesKey("username")
