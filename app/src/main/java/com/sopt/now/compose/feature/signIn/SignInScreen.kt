@@ -110,7 +110,7 @@ fun SignInScreen() {
                 .fillMaxWidth()
                 .padding(top = 8.dp)
         ) {
-            Text("회원가입")
+            Text(context.getString(R.string.sign_up_button))
         }
     }
 }
