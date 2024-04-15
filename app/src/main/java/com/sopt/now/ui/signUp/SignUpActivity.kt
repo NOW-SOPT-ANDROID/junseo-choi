@@ -4,20 +4,29 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import com.sopt.now.NowSopt
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivitySignUpBinding
+import com.sopt.now.ui.common.base.BaseFactory
 import com.teamwss.websoso.ui.common.base.BindingActivity
 
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
-    private val viewModel: SignUpViewModel by viewModels { SignUpViewModel.Factory }
+    private lateinit var signUpViewModel: SignUpViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setupViewModel()
         setupSignUpButtonListener()
+
         observeSignUpResult()
+    }
+
+    private fun setupViewModel() {
+        val factory = BaseFactory { SignUpViewModel(NowSopt.getUserRepository()) }
+        signUpViewModel = ViewModelProvider(this, factory)[SignUpViewModel::class.java]
     }
 
     private fun setupSignUpButtonListener() {
@@ -27,12 +36,12 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
             val nickname = binding.etSignUpNickname.text.toString()
             val drinkCapacity = binding.sliderSignUpDrinkCapacity.value
 
-            viewModel.performSignUp(username, password, nickname, drinkCapacity)
+            signUpViewModel.performSignUp(username, password, nickname, drinkCapacity)
         }
     }
 
     private fun observeSignUpResult() {
-        viewModel.uiState.observe(this) { state ->
+        signUpViewModel.uiState.observe(this) { state ->
             when (state) {
                 SignUpUiState.UsernameError -> {
                     binding.etSignUpUsername.error = getString(R.string.error_sign_up_username)

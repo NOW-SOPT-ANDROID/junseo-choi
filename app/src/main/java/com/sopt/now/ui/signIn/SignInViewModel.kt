@@ -3,9 +3,7 @@ package com.sopt.now.ui.signIn
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.NowSopt
 import com.sopt.now.data.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,7 +12,10 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
     private val _uiState = MutableLiveData<SignInUiState>(SignInUiState.Loading)
     val uiState: LiveData<SignInUiState> = _uiState
 
-    fun performSignIn(username: String, password: String) {
+    fun performSignIn(
+        username: String,
+        password: String,
+    ) {
         if (!checkUsernameBlank(username)) return
         if (!checkPasswordBlank(password)) return
 
@@ -43,7 +44,10 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
         return true
     }
 
-    private fun checkUsernameWrong(username: String, onNotWrong: () -> Unit) {
+    private fun checkUsernameWrong(
+        username: String,
+        onNotWrong: () -> Unit,
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 userRepository.countUsername(username)
@@ -59,7 +63,11 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
         }
     }
 
-    private fun checkPasswordWrong(username: String, password: String, onNotWrong: () -> Unit) {
+    private fun checkPasswordWrong(
+        username: String,
+        password: String,
+        onNotWrong: () -> Unit,
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 userRepository.getPasswordByUsername(username)
@@ -71,18 +79,6 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
                 onNotWrong()
             }.onFailure {
                 _uiState.postValue(SignInUiState.Failure)
-            }
-        }
-    }
-
-    companion object {
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                if (modelClass.isAssignableFrom(SignInViewModel::class.java)) {
-                    @Suppress("UNCHECKED_CAST")
-                    return SignInViewModel(NowSopt.getUserRepository()) as T
-                }
-                throw IllegalArgumentException("Unknown ViewModel class")
             }
         }
     }

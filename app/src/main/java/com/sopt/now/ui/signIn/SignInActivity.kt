@@ -2,26 +2,35 @@ package com.sopt.now.ui.signIn
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
+import com.sopt.now.NowSopt
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivitySignInBinding
+import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.main.MainActivity
 import com.sopt.now.ui.signUp.SignUpActivity
 import com.teamwss.websoso.ui.common.base.BindingActivity
 
 class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_sign_in) {
-    private val viewModel: SignInViewModel by viewModels { SignInViewModel.Factory }
+    private lateinit var signInViewModel: SignInViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        observeSignInResult()
+        setupViewModel()
         setupSignInButtonListener()
         setupNavigateToSignUpListener()
+
+        observeSignInResult()
+    }
+
+    private fun setupViewModel() {
+        val factory = BaseFactory { SignInViewModel(NowSopt.getUserRepository()) }
+        signInViewModel = ViewModelProvider(this, factory)[SignInViewModel::class.java]
     }
 
     private fun observeSignInResult() {
-        viewModel.uiState.observe(this) { state ->
+        signInViewModel.uiState.observe(this) { state ->
             when (state) {
                 SignInUiState.UsernameBlank -> {
                     binding.etSignInUsername.error =
@@ -60,7 +69,7 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
 
     private fun setupSignInButtonListener() {
         binding.viewSignInButton.setOnClickListener {
-            viewModel.performSignIn(
+            signInViewModel.performSignIn(
                 binding.etSignInUsername.text.toString(),
                 binding.etSignInPassword.text.toString(),
             )

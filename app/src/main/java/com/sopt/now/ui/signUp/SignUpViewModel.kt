@@ -3,9 +3,7 @@ package com.sopt.now.ui.signUp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.NowSopt
 import com.sopt.now.data.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -115,16 +113,5 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
         private const val MAX_USERNAME_LENGTH = 10
         private const val MIN_PASSWORD_LENGTH = 8
         private const val MAX_PASSWORD_LENGTH = 12
-
-        val Factory: ViewModelProvider.Factory =
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    if (modelClass.isAssignableFrom(SignUpViewModel::class.java)) {
-                        @Suppress("UNCHECKED_CAST")
-                        return SignUpViewModel(NowSopt.getUserRepository()) as T
-                    }
-                    throw IllegalArgumentException("Unknown ViewModel class")
-                }
-            }
     }
 }
