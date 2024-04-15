@@ -14,7 +14,12 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
     private val _uiState = MutableLiveData<SignUpUiState>(SignUpUiState.Loading)
     val uiState: LiveData<SignUpUiState> = _uiState
 
-    fun performSignUp(username: String, password: String, nickname: String, drinkCapacity: Float) {
+    fun performSignUp(
+        username: String,
+        password: String,
+        nickname: String,
+        drinkCapacity: Float,
+    ) {
         if (!checkUsernameValid(username)) return
         if (!checkPasswordValid(password)) return
         if (!checkNicknameNotBlank(nickname)) return
@@ -50,7 +55,10 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
         return true
     }
 
-    private fun checkUsernameTaken(username: String, onNotTaken: () -> Unit) {
+    private fun checkUsernameTaken(
+        username: String,
+        onNotTaken: () -> Unit,
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 userRepository.countUsername(username)
@@ -66,7 +74,10 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
         }
     }
 
-    private fun checkNicknameTaken(nickname: String, onNotTaken: () -> Unit) {
+    private fun checkNicknameTaken(
+        nickname: String,
+        onNotTaken: () -> Unit,
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 userRepository.countNickname(nickname)
@@ -86,7 +97,7 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
         username: String,
         password: String,
         nickname: String,
-        drinkCapacity: Float
+        drinkCapacity: Float,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
@@ -100,19 +111,20 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
     }
 
     companion object {
-        const val MIN_USERNAME_LENGTH = 6
-        const val MAX_USERNAME_LENGTH = 10
-        const val MIN_PASSWORD_LENGTH = 8
-        const val MAX_PASSWORD_LENGTH = 12
+        private const val MIN_USERNAME_LENGTH = 6
+        private const val MAX_USERNAME_LENGTH = 10
+        private const val MIN_PASSWORD_LENGTH = 8
+        private const val MAX_PASSWORD_LENGTH = 12
 
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                if (modelClass.isAssignableFrom(SignUpViewModel::class.java)) {
-                    @Suppress("UNCHECKED_CAST")
-                    return SignUpViewModel(NowSopt.getUserRepository()) as T
+        val Factory: ViewModelProvider.Factory =
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    if (modelClass.isAssignableFrom(SignUpViewModel::class.java)) {
+                        @Suppress("UNCHECKED_CAST")
+                        return SignUpViewModel(NowSopt.getUserRepository()) as T
+                    }
+                    throw IllegalArgumentException("Unknown ViewModel class")
                 }
-                throw IllegalArgumentException("Unknown ViewModel class")
             }
-        }
     }
 }
