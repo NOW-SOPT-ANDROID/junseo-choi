@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
-    private val _userInfo = MutableLiveData<UserInfoEntity>(UserInfoEntity(-1, "", "", "", 0f))
+    private val _userInfo = MutableLiveData<UserInfoEntity>(UserInfoEntity.defaultUserInfo)
     val userInfo: LiveData<UserInfoEntity> = _userInfo
 
     val tempProfileImageUrl: String = "https://avatars.githubusercontent.com/u/127238018?v=4"
@@ -33,14 +33,15 @@ class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
     }
 
     companion object {
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-                    @Suppress("UNCHECKED_CAST")
-                    return MainViewModel(NowSopt.getUserRepository()) as T
+        val Factory: ViewModelProvider.Factory =
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+                        @Suppress("UNCHECKED_CAST")
+                        return MainViewModel(NowSopt.getUserRepository()) as T
+                    }
+                    throw IllegalArgumentException("Unknown ViewModel class")
                 }
-                throw IllegalArgumentException("Unknown ViewModel class")
             }
-        }
     }
 }

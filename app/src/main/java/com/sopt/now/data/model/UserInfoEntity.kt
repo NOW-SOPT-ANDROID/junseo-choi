@@ -10,4 +10,14 @@ data class UserInfoEntity(
     val password: String,
     val nickname: String,
     val drinkCapacity: Float,
-)
+) {
+    companion object {
+        val defaultUserInfo =
+            UserInfoEntity(
+                username = "",
+                password = "",
+                nickname = "",
+                drinkCapacity = 0f,
+            )
+    }
+}
