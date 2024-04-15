@@ -4,32 +4,35 @@ import com.sopt.now.data.local.dao.UserInfoDao
 import com.sopt.now.data.model.UserInfoEntity
 
 class UserRepository(private val userInfoDao: UserInfoDao) {
-
-    fun getPasswordByUsername(username: String): String {
+    suspend fun getPasswordByUsername(username: String): String {
         return userInfoDao.getPasswordByUsername(username)
     }
 
-    fun insertUser(username: String, password: String, nickname: String, drinkCapacity: Float) {
+    suspend fun insertUser(
+        username: String,
+        password: String,
+        nickname: String,
+        drinkCapacity: Float,
+    ) {
         userInfoDao.insertUser(
             UserInfoEntity(
                 username = username,
                 password = password,
                 nickname = nickname,
-                drinkCapacity = drinkCapacity
-            )
+                drinkCapacity = drinkCapacity,
+            ),
         )
     }
 
-    fun countUsername(username: String): Int {
+    suspend fun countUsername(username: String): Int {
         return userInfoDao.countUsername(username)
     }
 
-    fun countNickname(nickname: String): Int {
+    suspend fun countNickname(nickname: String): Int {
         return userInfoDao.countNickname(nickname)
     }
 
-    fun getUserInfo(username: String): UserInfoEntity {
+    suspend fun getUserInfo(username: String): UserInfoEntity {
         return userInfoDao.getUserInfo(username)
     }
-
 }
