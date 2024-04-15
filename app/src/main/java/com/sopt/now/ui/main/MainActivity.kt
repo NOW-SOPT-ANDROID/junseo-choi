@@ -26,7 +26,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun loadUserInfo() {
-        val username = intent.getStringExtra(USER_NAME) ?: ""
+        val username = intent.getStringExtra(USER_NAME).orEmpty()
         viewModel.getUserInfo(username)
     }
 
