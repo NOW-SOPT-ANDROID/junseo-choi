@@ -1,3 +1,42 @@
 <resources>
     <string name="app_name">NOW SOPT Android</string>
+
+    <!--    activity_main   -->
+    <string name="tv_main_title">NOW SOPT HOMEWORK</string>
+    <string name="tv_main_username_title">USERNAME</string>
+    <string name="tv_main_password_title">PASSWORD</string>
+    <string name="tv_main_drink_capacity_title">DRINK CAPACITY</string>
+
+    <!--    activity_sign_in    -->
+    <string name="tv_sign_in_title">Welcome to SOPT 👊</string>
+    <string name="tl_sign_in_username">Username</string>
+    <string name="tl_sign_in_password">Password</string>
+    <string name="tv_sign_in_button">Sign In</string>
+    <string name="tv_sign_in_sign_up_button">Sign Up</string>
+
+    <!--    activity_sign_up    -->
+    <string name="tv_sign_up_title">Sign Up 🎉</string>
+    <string name="tl_sign_up_username">Username</string>
+    <string name="tl_sign_up_password">Password</string>
+    <string name="tl_sign_up_nickname">Nickname</string>
+    <string name="tv_sign_up_drink_capacity">Drink Capacity</string>
+    <string name="tv_sign_up_button">Submit</string>
+
+    <!--    SignInActivity    -->
+    <string name="error_sign_in_username_blank">아이디를 입력해주세요.</string>
+    <string name="error_sign_in_password_blank">비밀번호를 입력해주세요.</string>
+    <string name="error_sign_in_username_wrong">존재하지 않는 아이디입니다.</string>
+    <string name="error_sign_in_password_wrong">비밀번호가 일치하지 않습니다.</string>
+    <string name="error_sign_in_failure">로그인에 실패하였습니다.</string>
+    <string name="success_sign_in">로그인에 성공하셨습니다!</string>
+
+    <!--    SignUpActivity    -->
+    <string name="error_sign_up_username">아이디는 6자 이상 10자 이하여야 합니다.</string>
+    <string name="error_sign_up_password">비밀번호는 8자 이상 12자 이하여야 합니다.</string>
+    <string name="error_sign_up_nickname">닉네임을 입력해주세요.</string>
+    <string name="error_sign_up_username_taken">이미 사용 중인 아이디입니다.</string>
+    <string name="error_sign_up_nickname_taken">이미 사용 중인 닉네임입니다.</string>
+    <string name="error_sign_up_failure">회원가입 오류입니다.</string>
+    <string name="success_sign_up">회원가입에 성공하셨습니다!</string>
+
 </resources>

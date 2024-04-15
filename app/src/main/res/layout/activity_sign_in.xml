@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="30dp">
+
+        <TextView
+            android:id="@+id/tvSignInTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp"
+            android:gravity="center"
+            android:text="@string/tv_sign_in_title"
+            android:textAppearance="@style/headline1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlSignInUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:hint="@string/tl_sign_in_username"
+            app:hintTextAppearance="@style/title1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSignInTitle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSignInUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/title1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlSignInPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:hint="@string/tl_sign_in_password"
+            app:hintTextAppearance="@style/title1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tlSignInUsername">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSignInPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textAppearance="@style/title1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:id="@+id/viewSignInButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/bg_default_radius_8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tlSignInPassword" />
+
+        <TextView
+            android:id="@+id/tvSignInButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_sign_in_button"
+            android:textAppearance="@style/title1"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/viewSignInButton"
+            app:layout_constraintEnd_toEndOf="@id/viewSignInButton"
+            app:layout_constraintStart_toStartOf="@id/viewSignInButton"
+            app:layout_constraintTop_toTopOf="@id/viewSignInButton" />
+
+        <View
+            android:id="@+id/viewSignInSignUpButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_default_radius_8dp"
+            android:backgroundTint="@color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewSignInButton" />
+
+        <TextView
+            android:id="@+id/tvSignInSignUpButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_sign_in_sign_up_button"
+            android:textAppearance="@style/title1"
+            android:textColor="#324a66"
+            app:layout_constraintBottom_toBottomOf="@id/viewSignInSignUpButton"
+            app:layout_constraintEnd_toEndOf="@id/viewSignInSignUpButton"
+            app:layout_constraintStart_toStartOf="@id/viewSignInSignUpButton"
+            app:layout_constraintTop_toTopOf="@id/viewSignInSignUpButton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
