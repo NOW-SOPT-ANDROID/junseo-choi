@@ -4,17 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import com.sopt.now.R
 import com.sopt.now.databinding.ActivityMainBinding
+import com.teamwss.websoso.ui.common.base.BindingActivity
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-
+class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val viewModel: MainViewModel by viewModels { MainViewModel.Factory }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -26,7 +24,10 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val USER_NAME = "USER_NAME"
 
-        fun newIntent(context: Context, username: String): Intent {
+        fun newIntent(
+            context: Context,
+            username: String,
+        ): Intent {
             return Intent(context, MainActivity::class.java).apply {
                 putExtra(USER_NAME, username)
             }

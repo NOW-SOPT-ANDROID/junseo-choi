@@ -3,20 +3,17 @@ package com.sopt.now.ui.signIn
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivitySignInBinding
 import com.sopt.now.ui.main.MainActivity
 import com.sopt.now.ui.signUp.SignUpActivity
+import com.teamwss.websoso.ui.common.base.BindingActivity
 
-class SignInActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySignInBinding
-
+class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_sign_in) {
     private val viewModel: SignInViewModel by viewModels { SignInViewModel.Factory }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignInBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         observeSignInResult()
         setupSignInButtonListener()
@@ -65,7 +62,7 @@ class SignInActivity : AppCompatActivity() {
         binding.viewSignInButton.setOnClickListener {
             viewModel.performSignIn(
                 binding.etSignInUsername.text.toString(),
-                binding.etSignInPassword.text.toString()
+                binding.etSignInPassword.text.toString(),
             )
         }
     }

@@ -5,20 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivitySignUpBinding
+import com.teamwss.websoso.ui.common.base.BindingActivity
 
-class SignUpActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySignUpBinding
-
+class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
     private val viewModel: SignUpViewModel by viewModels { SignUpViewModel.Factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignUpBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         setupSignUpButtonListener()
         observeSignUpResult()
@@ -70,7 +66,7 @@ class SignUpActivity : AppCompatActivity() {
                     Snackbar.make(
                         binding.root,
                         getString(R.string.error_sign_up_failure),
-                        Snackbar.LENGTH_SHORT
+                        Snackbar.LENGTH_SHORT,
                     ).show()
                 }
 
