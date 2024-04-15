@@ -19,10 +19,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun setupDataBinding() {
-        with(binding) {
-            lifecycleOwner = this@MainActivity
-            viewModel = viewModel
-        }
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
     }
 
     private fun loadUserInfo() {
