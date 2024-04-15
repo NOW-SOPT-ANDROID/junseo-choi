@@ -14,9 +14,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
+        setupDataBinding()
+        loadUserInfo()
+    }
 
+    private fun setupDataBinding() {
+        with(binding) {
+            lifecycleOwner = this@MainActivity
+            viewModel = viewModel
+        }
+    }
+
+    private fun loadUserInfo() {
         val username = intent.getStringExtra(USER_NAME) ?: ""
         viewModel.getUserInfo(username)
     }
