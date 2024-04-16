@@ -58,7 +58,7 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
                 _uiState.postValue(SignInUiState.Failure)
             }
         }
-        return _uiState.value == SignInUiState.UsernameWrong
+        return _uiState.value == SignInUiState.UsernameWrong && _uiState.value != SignInUiState.Failure
     }
 
     private fun checkPasswordWrong(
@@ -74,6 +74,6 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
                 _uiState.postValue(SignInUiState.Failure)
             }
         }
-        return _uiState.value == SignInUiState.PasswordWrong
+        return _uiState.value == SignInUiState.PasswordWrong && _uiState.value != SignInUiState.Failure
     }
 }
