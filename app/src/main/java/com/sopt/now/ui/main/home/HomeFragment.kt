@@ -67,7 +67,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             return HomeFragment().apply {
                 arguments =
                     Bundle().apply {
-                        putString(HomeFragment.USER_NAME, username)
+                        putString(USER_NAME, username)
                     }
             }
         }
