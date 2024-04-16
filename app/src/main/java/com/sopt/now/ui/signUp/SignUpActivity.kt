@@ -36,7 +36,7 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
             val nickname = binding.etSignUpNickname.text.toString()
             val drinkCapacity = binding.sliderSignUpDrinkCapacity.value
 
-            signUpViewModel.performSignUp(username, password, nickname, drinkCapacity)
+            signUpViewModel.checkIsInputValidAndSignUp(username, password, nickname, drinkCapacity)
         }
     }
 
