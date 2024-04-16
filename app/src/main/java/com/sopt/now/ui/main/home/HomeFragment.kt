@@ -49,7 +49,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     private fun observeUserInfo() {
         mainViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
-            updateRecyclerView(userInfo, Friend.dummyData)
+            updateRecyclerView(userInfo, Friend.dummyData.sortedBy { it.name })
         }
     }
 
