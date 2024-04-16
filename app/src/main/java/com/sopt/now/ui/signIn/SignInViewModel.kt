@@ -12,74 +12,68 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
     private val _uiState = MutableLiveData<SignInUiState>(SignInUiState.Loading)
     val uiState: LiveData<SignInUiState> = _uiState
 
-    fun performSignIn(
+    fun checkIsInputValidAndSignIn(
         username: String,
         password: String,
     ) {
-        if (!checkUsernameBlank(username)) return
-        if (!checkPasswordBlank(password)) return
+        if (checkUsernameBlank(username)) return
+        if (checkPasswordBlank(password)) return
+        if (checkIsInputDataWrong(username, password)) return
 
-        checkUsernameWrong(username) {
-            checkPasswordWrong(username, password) {
-                viewModelScope.launch {
-                    _uiState.postValue(SignInUiState.Success)
-                }
-            }
+        performSignIn()
+    }
+
+    private fun checkIsInputDataWrong(
+        username: String,
+        password: String,
+    ): Boolean {
+        if (checkUsernameWrong(username)) return true
+        if (checkPasswordWrong(username, password)) return true
+        return false
+    }
+
+    private fun performSignIn() {
+        viewModelScope.launch {
+            _uiState.postValue(SignInUiState.Success)
         }
     }
 
     private fun checkUsernameBlank(username: String): Boolean {
-        if (username.isBlank()) {
-            _uiState.value = SignInUiState.UsernameBlank
-            return false
-        }
-        return true
+        if (username.isBlank()) _uiState.value = SignInUiState.UsernameBlank
+        return _uiState.value == SignInUiState.UsernameBlank
     }
 
     private fun checkPasswordBlank(password: String): Boolean {
-        if (password.isBlank()) {
-            _uiState.value = SignInUiState.PasswordBlank
-            return false
-        }
-        return true
+        if (password.isBlank()) _uiState.value = SignInUiState.PasswordBlank
+        return _uiState.value == SignInUiState.PasswordBlank
     }
 
-    private fun checkUsernameWrong(
-        username: String,
-        onNotWrong: () -> Unit,
-    ) {
+    private fun checkUsernameWrong(username: String): Boolean {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 userRepository.countUsername(username)
             }.onSuccess { count ->
-                if (count == 0) {
-                    _uiState.postValue(SignInUiState.UsernameWrong)
-                    return@launch
-                }
-                onNotWrong()
+                if (count == 0) _uiState.postValue(SignInUiState.UsernameWrong)
             }.onFailure {
                 _uiState.postValue(SignInUiState.Failure)
             }
         }
+        return _uiState.value == SignInUiState.UsernameWrong
     }
 
     private fun checkPasswordWrong(
         username: String,
         password: String,
-        onNotWrong: () -> Unit,
-    ) {
+    ): Boolean {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 userRepository.getPasswordByUsername(username)
             }.onSuccess { correctPassword ->
-                if (password != correctPassword) {
-                    _uiState.postValue(SignInUiState.PasswordWrong)
-                    return@launch
-                }
-                onNotWrong()
+                if (password != correctPassword) _uiState.postValue(SignInUiState.PasswordWrong)
             }.onFailure {
                 _uiState.postValue(SignInUiState.Failure)
             }
         }
+        return _uiState.value == SignInUiState.PasswordWrong
     }
 }

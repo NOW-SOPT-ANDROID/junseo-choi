@@ -69,7 +69,7 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
 
     private fun setupSignInButtonListener() {
         binding.viewSignInButton.setOnClickListener {
-            signInViewModel.performSignIn(
+            signInViewModel.checkIsInputValidAndSignIn(
                 binding.etSignInUsername.text.toString(),
                 binding.etSignInPassword.text.toString(),
             )
