@@ -17,10 +17,10 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
     ) {
         viewModelScope.launch {
             when {
-                checkUsernameBlank(username) -> return@launch
-                checkPasswordBlank(password) -> return@launch
-                checkUsernameWrong(username) -> return@launch
-                checkPasswordWrong(username, password) -> return@launch
+                isUsernameBlank(username) -> return@launch
+                isPasswordBlank(password) -> return@launch
+                isUsernameWrong(username) -> return@launch
+                isPasswordWrong(username, password) -> return@launch
                 else -> performSignIn()
             }
         }
@@ -32,17 +32,17 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
         }
     }
 
-    private fun checkUsernameBlank(username: String): Boolean {
+    private fun isUsernameBlank(username: String): Boolean {
         if (username.isBlank()) _uiState.value = SignInUiState.UsernameBlank
         return _uiState.value == SignInUiState.UsernameBlank
     }
 
-    private fun checkPasswordBlank(password: String): Boolean {
+    private fun isPasswordBlank(password: String): Boolean {
         if (password.isBlank()) _uiState.value = SignInUiState.PasswordBlank
         return _uiState.value == SignInUiState.PasswordBlank
     }
 
-    private suspend fun checkUsernameWrong(username: String): Boolean {
+    private suspend fun isUsernameWrong(username: String): Boolean {
         val count =
             runCatching {
                 userRepository.countUsername(username)
@@ -55,7 +55,7 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
         return count == 0 && _uiState.value != SignInUiState.Failure
     }
 
-    private suspend fun checkPasswordWrong(
+    private suspend fun isPasswordWrong(
         username: String,
         password: String,
     ): Boolean {

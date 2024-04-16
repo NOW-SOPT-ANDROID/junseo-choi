@@ -19,48 +19,48 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
     ) {
         viewModelScope.launch {
             when {
-                checkUsernameBlank(username) -> return@launch
-                checkPasswordBlank(password) -> return@launch
-                checkNicknameBlank(nickname) -> return@launch
-                checkUsernameValid(username) -> return@launch
-                checkPasswordValid(password) -> return@launch
-                checkUsernameTaken(username) -> return@launch
-                checkNicknameTaken(nickname) -> return@launch
+                isUsernameBlank(username) -> return@launch
+                isPasswordBlank(password) -> return@launch
+                isNicknameBlank(nickname) -> return@launch
+                isUsernameValid(username) -> return@launch
+                isPasswordValid(password) -> return@launch
+                isUsernameTaken(username) -> return@launch
+                isNicknameTaken(nickname) -> return@launch
                 else -> registerUser(username, password, nickname, drinkCapacity)
             }
         }
     }
 
-    private fun checkUsernameBlank(username: String): Boolean {
+    private fun isUsernameBlank(username: String): Boolean {
         if (username.isBlank()) _uiState.value = SignUpUiState.UsernameError
         return _uiState.value == SignUpUiState.UsernameError
     }
 
-    private fun checkPasswordBlank(password: String): Boolean {
+    private fun isPasswordBlank(password: String): Boolean {
         if (password.isBlank()) _uiState.value = SignUpUiState.PasswordError
         return _uiState.value == SignUpUiState.PasswordError
     }
 
-    private fun checkNicknameBlank(nickname: String): Boolean {
+    private fun isNicknameBlank(nickname: String): Boolean {
         if (nickname.isBlank()) _uiState.value = SignUpUiState.NicknameBlank
         return _uiState.value == SignUpUiState.NicknameBlank
     }
 
-    private fun checkUsernameValid(username: String): Boolean {
+    private fun isUsernameValid(username: String): Boolean {
         if (username.length !in MIN_USERNAME_LENGTH..MAX_USERNAME_LENGTH) {
             _uiState.value = SignUpUiState.UsernameError
         }
         return _uiState.value == SignUpUiState.UsernameError
     }
 
-    private fun checkPasswordValid(password: String): Boolean {
+    private fun isPasswordValid(password: String): Boolean {
         if (password.length !in MIN_PASSWORD_LENGTH..MAX_PASSWORD_LENGTH) {
             _uiState.value = SignUpUiState.PasswordError
         }
         return _uiState.value == SignUpUiState.PasswordError
     }
 
-    private suspend fun checkUsernameTaken(username: String): Boolean {
+    private suspend fun isUsernameTaken(username: String): Boolean {
         val count =
             runCatching {
                 userRepository.countUsername(username)
@@ -73,7 +73,7 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
         return count != 0 && _uiState.value != SignUpUiState.Failure
     }
 
-    private suspend fun checkNicknameTaken(nickname: String): Boolean {
+    private suspend fun isNicknameTaken(nickname: String): Boolean {
         val count =
             runCatching {
                 userRepository.countNickname(nickname)
