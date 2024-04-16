@@ -1,6 +1,7 @@
 package com.sopt.now.util
 
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import coil.load
@@ -56,4 +57,12 @@ private fun loadCustomImage(
     } ?: run {
         Log.e("BindingAdapter", "Failed to load image")
     }
+}
+
+@BindingAdapter("isVisible")
+fun setVisibility(
+    view: View,
+    isVisible: Boolean,
+) {
+    view.visibility = if (isVisible) View.VISIBLE else View.GONE
 }

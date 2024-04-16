@@ -42,4 +42,9 @@
     <string name="main_bnv_search">검색</string>
     <string name="main_bnv_my_page">마이페이지</string>
 
+    <!--    Temp    -->
+    <string name="temp_profile_image_url">https://avatars.githubusercontent.com/u/127238018?v=4</string>
+    <string name="temp_profile_background_image_url">https://pbs.twimg.com/media/GJsSN8hagAMUyak?format=jpg&amp;name=large</string>
+    <string name="temp_profile_self_description">안녕하세요 저는 감자인데요, 아무말이나 이것저것 써볼까 합니다</string>
+
 </resources>

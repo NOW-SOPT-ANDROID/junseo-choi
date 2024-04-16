@@ -20,19 +20,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getUsername()
 
         initDefaultFragment(savedInstanceState)
 
         setupViewModel()
         setupDataBinding()
         setupBottomNavigation()
-
-        getUsername()
     }
 
     private fun initDefaultFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            val homeFragment = HomeFragment.newInstance()
+            val homeFragment = HomeFragment.newInstance(username)
             changeFragment(homeFragment)
         }
         binding.bnvMain.selectedItemId = R.id.menu_main_home
@@ -57,8 +56,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun setupBottomNavigation() {
         binding.bnvMain.setOnItemSelectedListener { item ->
             val selectedFragment = createFragmentByMenuId(item.itemId)
-            selectedFragment?.let { changeFragment(it) }
-            return@setOnItemSelectedListener selectedFragment != null
+            changeFragment(selectedFragment)
+            return@setOnItemSelectedListener true
         }
     }
 
@@ -66,7 +65,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         val username = intent.getStringExtra(USER_NAME).orEmpty()
         return when (menuId) {
             R.id.menu_main_search -> SearchFragment.newInstance()
-            R.id.menu_main_home -> HomeFragment.newInstance()
+            R.id.menu_main_home -> HomeFragment.newInstance(username)
             R.id.menu_main_my_page -> MyPageFragment.newInstance(username)
             else -> throw IllegalArgumentException()
         }
