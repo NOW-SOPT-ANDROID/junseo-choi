@@ -18,18 +18,10 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
     ) {
         if (checkUsernameBlank(username)) return
         if (checkPasswordBlank(password)) return
-        if (checkIsInputDataWrong(username, password)) return
+        if (checkUsernameWrong(username)) return
+        if (checkPasswordWrong(username, password)) return
 
         performSignIn()
-    }
-
-    private fun checkIsInputDataWrong(
-        username: String,
-        password: String,
-    ): Boolean {
-        if (checkUsernameWrong(username)) return true
-        if (checkPasswordWrong(username, password)) return true
-        return false
     }
 
     private fun performSignIn() {
