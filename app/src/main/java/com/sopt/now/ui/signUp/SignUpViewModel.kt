@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.data.repository.UserRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() {
@@ -18,64 +17,73 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
         nickname: String,
         drinkCapacity: Float,
     ) {
-        if (checkUsernameValid(username)) return
-        if (checkPasswordValid(password)) return
-        if (checkNicknameBlank(nickname)) return
-        if (checkUsernameTaken(username)) return
-        if (checkNicknameTaken(nickname)) return
+        viewModelScope.launch {
+            when {
+                checkUsernameBlank(username) -> return@launch
+                checkPasswordBlank(password) -> return@launch
+                checkNicknameBlank(nickname) -> return@launch
+                checkUsernameValid(username) -> return@launch
+                checkPasswordValid(password) -> return@launch
+                checkUsernameTaken(username) -> return@launch
+                checkNicknameTaken(nickname) -> return@launch
+                else -> registerUser(username, password, nickname, drinkCapacity)
+            }
+        }
+    }
 
-        registerUser(username, password, nickname, drinkCapacity)
+    private fun checkUsernameBlank(username: String): Boolean {
+        if (username.isBlank()) _uiState.value = SignUpUiState.UsernameError
+        return _uiState.value == SignUpUiState.UsernameError
+    }
+
+    private fun checkPasswordBlank(password: String): Boolean {
+        if (password.isBlank()) _uiState.value = SignUpUiState.PasswordError
+        return _uiState.value == SignUpUiState.PasswordError
+    }
+
+    private fun checkNicknameBlank(nickname: String): Boolean {
+        if (nickname.isBlank()) _uiState.value = SignUpUiState.NicknameBlank
+        return _uiState.value == SignUpUiState.NicknameBlank
     }
 
     private fun checkUsernameValid(username: String): Boolean {
         if (username.length !in MIN_USERNAME_LENGTH..MAX_USERNAME_LENGTH) {
-            _uiState.value =
-                SignUpUiState.UsernameError
+            _uiState.value = SignUpUiState.UsernameError
         }
         return _uiState.value == SignUpUiState.UsernameError
     }
 
     private fun checkPasswordValid(password: String): Boolean {
         if (password.length !in MIN_PASSWORD_LENGTH..MAX_PASSWORD_LENGTH) {
-            _uiState.value =
-                SignUpUiState.PasswordError
+            _uiState.value = SignUpUiState.PasswordError
         }
         return _uiState.value == SignUpUiState.PasswordError
     }
 
-    private fun checkNicknameBlank(nickname: String): Boolean {
-        if (nickname.isBlank()) _uiState.value = SignUpUiState.NicknameError
-        return _uiState.value == SignUpUiState.NicknameError
-    }
-
-    private fun checkUsernameTaken(username: String): Boolean {
-        viewModelScope.launch(Dispatchers.IO) {
+    private suspend fun checkUsernameTaken(username: String): Boolean {
+        val count =
             runCatching {
                 userRepository.countUsername(username)
-            }.onSuccess { count ->
-                if (count != 0) {
-                    _uiState.postValue(SignUpUiState.UsernameTaken)
-                }
+            }.onSuccess {
+                if (it != 0) _uiState.postValue(SignUpUiState.UsernameTaken)
             }.onFailure {
                 _uiState.postValue(SignUpUiState.Failure)
-            }
-        }
-        return _uiState.value == SignUpUiState.UsernameTaken && _uiState.value != SignUpUiState.Failure
+            }.getOrDefault(0)
+
+        return count != 0 && _uiState.value != SignUpUiState.Failure
     }
 
-    private fun checkNicknameTaken(nickname: String): Boolean {
-        viewModelScope.launch(Dispatchers.IO) {
+    private suspend fun checkNicknameTaken(nickname: String): Boolean {
+        val count =
             runCatching {
                 userRepository.countNickname(nickname)
-            }.onSuccess { count ->
-                if (count != 0) {
-                    _uiState.postValue(SignUpUiState.NicknameTaken)
-                }
+            }.onSuccess {
+                if (it != 0) _uiState.postValue(SignUpUiState.NicknameTaken)
             }.onFailure {
                 _uiState.postValue(SignUpUiState.Failure)
-            }
-        }
-        return _uiState.value == SignUpUiState.NicknameTaken && _uiState.value != SignUpUiState.Failure
+            }.getOrDefault(0)
+
+        return count != 0 && _uiState.value != SignUpUiState.Failure
     }
 
     private fun registerUser(
@@ -84,7 +92,7 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
         nickname: String,
         drinkCapacity: Float,
     ) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             runCatching {
                 userRepository.insertUser(username, password, nickname, drinkCapacity)
             }.onSuccess {

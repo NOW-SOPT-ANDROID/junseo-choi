@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.data.repository.UserRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SignInViewModel(private val userRepository: UserRepository) : ViewModel() {
@@ -16,12 +15,15 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
         username: String,
         password: String,
     ) {
-        if (checkUsernameBlank(username)) return
-        if (checkPasswordBlank(password)) return
-        if (checkUsernameWrong(username)) return
-        if (checkPasswordWrong(username, password)) return
-
-        performSignIn()
+        viewModelScope.launch {
+            when {
+                checkUsernameBlank(username) -> return@launch
+                checkPasswordBlank(password) -> return@launch
+                checkUsernameWrong(username) -> return@launch
+                checkPasswordWrong(username, password) -> return@launch
+                else -> performSignIn()
+            }
+        }
     }
 
     private fun performSignIn() {
@@ -40,32 +42,32 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
         return _uiState.value == SignInUiState.PasswordBlank
     }
 
-    private fun checkUsernameWrong(username: String): Boolean {
-        viewModelScope.launch(Dispatchers.IO) {
+    private suspend fun checkUsernameWrong(username: String): Boolean {
+        val count =
             runCatching {
                 userRepository.countUsername(username)
             }.onSuccess { count ->
                 if (count == 0) _uiState.postValue(SignInUiState.UsernameWrong)
             }.onFailure {
                 _uiState.postValue(SignInUiState.Failure)
-            }
-        }
-        return _uiState.value == SignInUiState.UsernameWrong && _uiState.value != SignInUiState.Failure
+            }.getOrNull() ?: 0
+
+        return count == 0 && _uiState.value != SignInUiState.Failure
     }
 
-    private fun checkPasswordWrong(
+    private suspend fun checkPasswordWrong(
         username: String,
         password: String,
     ): Boolean {
-        viewModelScope.launch(Dispatchers.IO) {
+        val correctPassword =
             runCatching {
                 userRepository.getPasswordByUsername(username)
             }.onSuccess { correctPassword ->
                 if (password != correctPassword) _uiState.postValue(SignInUiState.PasswordWrong)
             }.onFailure {
                 _uiState.postValue(SignInUiState.Failure)
-            }
-        }
-        return _uiState.value == SignInUiState.PasswordWrong && _uiState.value != SignInUiState.Failure
+            }.getOrNull()
+
+        return password != correctPassword && _uiState.value != SignInUiState.Failure
     }
 }
