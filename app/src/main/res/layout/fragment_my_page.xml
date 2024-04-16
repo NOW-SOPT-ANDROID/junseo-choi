@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+            <variable
+                name="mainViewModel"
+                type="com.sopt.now.ui.main.MainViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivMyPageProfileBackground"
+            blurRadius="@{5}"
+            imageUrl="@{mainViewModel.tempProfileBackgroundImageUrl}"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            android:src="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivMyPageProfile"
+            cornerRadius="@{30f}"
+            imageUrl="@{mainViewModel.tempProfileImageUrl}"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="150dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvMyPageNickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:text="@{mainViewModel.userInfo.nickname}"
+            android:textAppearance="@style/headline1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivMyPageProfile"
+            tools:text="최준서" />
+
+        <TextView
+            android:id="@+id/tvMyPageUsernameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="60dp"
+            android:text="@string/tv_main_username_title"
+            android:textAppearance="@style/title1"
+            android:textColor="@color/primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMyPageNickname" />
+
+        <TextView
+            android:id="@+id/tvMyPageUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="80dp"
+            android:text="@{mainViewModel.userInfo.username}"
+            android:textAppearance="@style/body1"
+            app:layout_constraintBottom_toBottomOf="@id/tvMyPageUsernameTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvMyPageUsernameTitle"
+            tools:text="최준서" />
+
+        <TextView
+            android:id="@+id/tvMyPagePasswordTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/tv_main_password_title"
+            android:textAppearance="@style/title1"
+            android:textColor="@color/primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMyPageUsernameTitle" />
+
+        <TextView
+            android:id="@+id/tvMyPagePassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="80dp"
+            android:text="@{mainViewModel.userInfo.password}"
+            android:textAppearance="@style/body1"
+            app:layout_constraintBottom_toBottomOf="@id/tvMyPagePasswordTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvMyPagePasswordTitle"
+            tools:text="12345678" />
+
+        <TextView
+            android:id="@+id/tvMyPageDrinkCapacityTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/tv_main_drink_capacity_title"
+            android:textAppearance="@style/title1"
+            android:textColor="@color/primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMyPagePasswordTitle" />
+
+        <TextView
+            android:id="@+id/tvMyPageDrinkCapacity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="80dp"
+            android:text="@{String.valueOf(mainViewModel.userInfo.drinkCapacity)}"
+            android:textAppearance="@style/body1"
+            app:layout_constraintBottom_toBottomOf="@id/tvMyPageDrinkCapacityTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvMyPageDrinkCapacityTitle"
+            tools:text="1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
