@@ -1,7 +1,6 @@
 package com.sopt.now.ui.signIn
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.sopt.now.NowSopt
@@ -32,7 +31,6 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
 
     private fun observeSignInResult() {
         signInViewModel.uiState.observe(this) { state ->
-            Log.e("SignInActivityTest", "observeSignInResult: $state")
             when (state) {
                 SignInUiState.UsernameBlank -> {
                     binding.etSignInUsername.error =
@@ -71,7 +69,6 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
 
     private fun setupSignInButtonListener() {
         binding.viewSignInButton.setOnClickListener {
-            Log.e("SignInActivityTest", "Button")
             signInViewModel.checkIsInputValidAndSignIn(
                 binding.etSignInUsername.text.toString(),
                 binding.etSignInPassword.text.toString(),
