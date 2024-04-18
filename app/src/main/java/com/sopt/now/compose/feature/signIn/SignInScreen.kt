@@ -1,7 +1,6 @@
 package com.sopt.now.compose.feature.signIn
 
 import android.content.Context
-import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,9 +24,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.navigation.NavController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.feature.main.MainActivity
-import com.sopt.now.compose.feature.signUp.SignUpActivity
+import com.sopt.now.compose.feature.main.Screen
 import com.sopt.now.compose.feature.signUp.dataStore
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
@@ -35,7 +34,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
-fun SignInScreen() {
+fun SignInScreen(navController: NavController) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -84,13 +83,7 @@ fun SignInScreen() {
                             context.getText(R.string.sign_in_success),
                             Toast.LENGTH_SHORT,
                         ).show()
-                        val intent =
-                            Intent(context, MainActivity::class.java).apply {
-                                putExtra("username", username)
-                            }
-                        context.startActivity(intent)
-                        val activity = (context as SignInActivity)
-                        activity.finish()
+                        navController.navigate(Screen.Home.route + "/$username")
                     } else {
                         Toast.makeText(
                             context,
@@ -109,8 +102,6 @@ fun SignInScreen() {
         }
         TextButton(
             onClick = {
-                val intent = Intent(context, SignUpActivity::class.java)
-                context.startActivity(intent)
             },
             modifier =
                 Modifier
@@ -126,7 +117,7 @@ fun SignInScreen() {
 @Composable
 private fun SignInPreview() {
     NOWSOPTAndroidTheme {
-        SignInScreen()
+        SignInScreen(navController = NavController(LocalContext.current))
     }
 }
 

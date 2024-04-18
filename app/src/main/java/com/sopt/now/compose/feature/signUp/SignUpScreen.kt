@@ -26,7 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.navigation.NavController
 import com.sopt.now.compose.R
+import com.sopt.now.compose.feature.main.Screen
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
@@ -34,7 +36,7 @@ import kotlinx.coroutines.launch
 val Context.dataStore by preferencesDataStore(name = "userPreferences")
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(navController: NavController) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var nickname by remember { mutableStateOf("") }
@@ -129,8 +131,7 @@ fun SignUpScreen() {
                             context.getString(R.string.sign_up_success),
                             Toast.LENGTH_SHORT,
                         ).show()
-                        val activity = (context as SignUpActivity)
-                        activity.finish()
+                        navController.navigate(Screen.SignIn.route)
                     }
                 }
             },
@@ -148,7 +149,7 @@ fun SignUpScreen() {
 @Composable
 private fun SignUpPreview() {
     NOWSOPTAndroidTheme {
-        SignUpScreen()
+        SignUpScreen(navController = NavController(LocalContext.current))
     }
 }
 
