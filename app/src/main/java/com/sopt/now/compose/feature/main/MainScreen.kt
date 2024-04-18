@@ -18,11 +18,13 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.now.compose.R
 import com.sopt.now.compose.feature.signIn.getUserInfo
 import com.sopt.now.compose.model.User
+import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,14 +49,14 @@ fun MainScreen(usernameFromSignIn: String) {
             Image(
                 painter = painterResource(id = R.drawable.img_main_profile),
                 contentDescription = "Profile Picture",
-                modifier = Modifier.size(200.dp)
+                modifier = Modifier.size(200.dp),
             )
             Text(
                 text = stringResource(id = R.string.nickname_label),
                 fontSize = 25.sp,
                 fontWeight = Bold,
                 color = colorResource(id = R.color.purple_500),
-                modifier = Modifier.padding(top = 40.dp)
+                modifier = Modifier.padding(top = 40.dp),
             )
             Text(
                 text = it.nickname,
@@ -66,7 +68,7 @@ fun MainScreen(usernameFromSignIn: String) {
                 fontSize = 25.sp,
                 fontWeight = Bold,
                 color = colorResource(id = R.color.purple_500),
-                modifier = Modifier.padding(top = 16.dp)
+                modifier = Modifier.padding(top = 16.dp),
             )
             Text(
                 text = it.username,
@@ -78,25 +80,32 @@ fun MainScreen(usernameFromSignIn: String) {
                 fontSize = 25.sp,
                 fontWeight = Bold,
                 color = colorResource(id = R.color.purple_500),
-                modifier = Modifier.padding(top = 16.dp)
+                modifier = Modifier.padding(top = 16.dp),
             )
             Text(
                 text = it.password,
                 fontSize = 16.sp,
-                modifier = Modifier.padding(top = 4.dp)
+                modifier = Modifier.padding(top = 4.dp),
             )
             Text(
                 text = stringResource(id = R.string.drink_capacity_label),
                 fontSize = 25.sp,
                 fontWeight = Bold,
                 color = colorResource(id = R.color.purple_500),
-                modifier = Modifier.padding(top = 16.dp)
+                modifier = Modifier.padding(top = 16.dp),
             )
             Text(
                 text = it.drinkCapacity.toString(),
                 fontSize = 16.sp,
-                modifier = Modifier.padding(top = 4.dp)
+                modifier = Modifier.padding(top = 4.dp),
             )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MainPreview() {
+    NOWSOPTAndroidTheme {
     }
 }
