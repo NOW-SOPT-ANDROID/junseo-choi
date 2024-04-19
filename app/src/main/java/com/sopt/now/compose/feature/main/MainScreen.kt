@@ -52,7 +52,21 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                     navArgument("username") { type = NavType.StringType },
                 ),
         ) {
-            MyPageScreen(navController = navController, username = it.arguments?.getString("username").orEmpty())
+            MyPageScreen(navController = navController)
+        }
+    }
+    navigation(
+        startDestination = Screen.Home.route,
+        route = Graph.Main.route,
+    ) {
+        composable(
+            route = Screen.MyPage.route + "/{username}",
+            arguments =
+                listOf(
+                    navArgument("username") { type = NavType.StringType },
+                ),
+        ) {
+            MyPageScreen(navController = navController)
         }
     }
 }

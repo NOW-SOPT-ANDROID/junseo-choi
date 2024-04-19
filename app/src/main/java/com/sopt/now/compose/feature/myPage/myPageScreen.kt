@@ -31,10 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun MyPageScreen(
-    navController: NavController,
-    username: String,
-) {
+fun MyPageScreen(navController: NavController) {
     val context = LocalContext.current
     var userInfo by remember { mutableStateOf<User?>(null) }
 
