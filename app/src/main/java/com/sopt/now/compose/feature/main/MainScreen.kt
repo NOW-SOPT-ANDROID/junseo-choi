@@ -9,9 +9,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.sopt.now.compose.feature.home.HomeScreen
 import com.sopt.now.compose.feature.myPage.MyPageScreen
+import com.sopt.now.compose.feature.search.SearchScreen
 import com.sopt.now.compose.feature.signIn.SignInScreen
 import com.sopt.now.compose.feature.signUp.SignUpScreen
+import com.sopt.now.compose.model.Graph
+import com.sopt.now.compose.model.Screen
 
 @Composable
 fun MainScreen(navController: NavHostController) {
@@ -54,19 +58,19 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
         ) {
             MyPageScreen(navController = navController)
         }
-    }
-    navigation(
-        startDestination = Screen.Home.route,
-        route = Graph.Main.route,
-    ) {
         composable(
-            route = Screen.MyPage.route + "/{username}",
+            route = Screen.Home.route + "/{username}",
             arguments =
                 listOf(
                     navArgument("username") { type = NavType.StringType },
                 ),
         ) {
-            MyPageScreen(navController = navController)
+            HomeScreen(navController = navController)
+        }
+        composable(
+            route = Screen.Search.route,
+        ) {
+            SearchScreen(navController = navController)
         }
     }
 }

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">NOW SOPT Android</string>
 
-    <!--  SignUpActivity  -->
+    <!--  SignUpScreen  -->
     <string name="sign_up_title">회원가입</string>
     <string name="username_label">아이디</string>
     <string name="password_label">비밀번호</string>
@@ -14,12 +14,16 @@
     <string name="drink_capacity_error">주량을 입력해주세요.</string>
     <string name="sign_up_success">회원가입에 성공하셨습니다!</string>
 
-    <!--  SignInActivity  -->
+    <!--  SignInScreen  -->
     <string name="sign_in_title">로그인</string>
     <string name="sign_in_button">로그인</string>
     <string name="sign_in_blank_error">정보를 모두 입력해주세요.</string>
     <string name="sign_in_success">로그인에 성공하셨습니다!</string>
     <string name="user_info_not_match">회원 정보가 일치하지 않습니다.</string>
 
+    <!--  BottomNav  -->
+    <string name="main_home">홈</string>
+    <string name="main_search">검색</string>
+    <string name="main_my_page">마이페이지</string>
 
 </resources>

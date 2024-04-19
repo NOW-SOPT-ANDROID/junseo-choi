@@ -1,4 +1,4 @@
-package com.sopt.now.compose.feature.main
+package com.sopt.now.compose.model
 
 sealed class Screen(val route: String) {
     data object SignIn : Screen(route = "signIn")
@@ -8,4 +8,6 @@ sealed class Screen(val route: String) {
     data object Home : Screen(route = "home")
 
     data object MyPage : Screen(route = "myPage")
+
+    data object Search : Screen(route = "search")
 }

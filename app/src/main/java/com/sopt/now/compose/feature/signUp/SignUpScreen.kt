@@ -28,7 +28,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.NavController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.feature.main.Screen
+import com.sopt.now.compose.model.Screen
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch

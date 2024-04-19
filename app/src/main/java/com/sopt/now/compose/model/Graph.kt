@@ -1,4 +1,4 @@
-package com.sopt.now.compose.feature.main
+package com.sopt.now.compose.model
 
 sealed class Graph(val route: String) {
     data object Auth : Graph("auth")
