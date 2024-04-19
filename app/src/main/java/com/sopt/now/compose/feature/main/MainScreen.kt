@@ -46,7 +46,7 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
 
 fun NavGraphBuilder.mainGraph(navController: NavController) {
     navigation(
-        startDestination = Screen.MyPage.route,
+        startDestination = Screen.Home.route,
         route = Graph.Main.route,
     ) {
         composable(
