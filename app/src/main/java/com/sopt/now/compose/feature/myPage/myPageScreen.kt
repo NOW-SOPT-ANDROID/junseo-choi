@@ -1,4 +1,4 @@
-package com.sopt.now.compose.feature.home
+package com.sopt.now.compose.feature.myPage
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -31,7 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(
+fun MyPageScreen(
     navController: NavController,
     username: String,
 ) {
@@ -111,7 +111,7 @@ fun HomeScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun HomePreview() {
+fun MyPagePreview() {
     NOWSOPTAndroidTheme {
     }
 }

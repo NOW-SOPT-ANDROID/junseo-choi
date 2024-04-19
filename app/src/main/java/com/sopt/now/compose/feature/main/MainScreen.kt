@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.sopt.now.compose.feature.home.HomeScreen
+import com.sopt.now.compose.feature.myPage.MyPageScreen
 import com.sopt.now.compose.feature.signIn.SignInScreen
 import com.sopt.now.compose.feature.signUp.SignUpScreen
 
@@ -42,17 +42,17 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
 
 fun NavGraphBuilder.mainGraph(navController: NavController) {
     navigation(
-        startDestination = Screen.Home.route,
+        startDestination = Screen.MyPage.route,
         route = Graph.Main.route,
     ) {
         composable(
-            route = Screen.Home.route + "/{username}",
+            route = Screen.MyPage.route + "/{username}",
             arguments =
                 listOf(
                     navArgument("username") { type = NavType.StringType },
                 ),
         ) {
-            HomeScreen(navController = navController, username = it.arguments?.getString("username").orEmpty())
+            MyPageScreen(navController = navController, username = it.arguments?.getString("username").orEmpty())
         }
     }
 }

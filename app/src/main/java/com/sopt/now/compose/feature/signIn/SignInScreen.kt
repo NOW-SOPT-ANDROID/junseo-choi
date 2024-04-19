@@ -83,7 +83,7 @@ fun SignInScreen(navController: NavController) {
                             context.getText(R.string.sign_in_success),
                             Toast.LENGTH_SHORT,
                         ).show()
-                        navController.navigate(Screen.Home.route + "/$username")
+                        navController.navigate(Screen.MyPage.route + "/$username")
                     } else {
                         Toast.makeText(
                             context,
