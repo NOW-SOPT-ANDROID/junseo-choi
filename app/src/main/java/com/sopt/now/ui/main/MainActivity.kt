@@ -63,9 +63,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun createFragmentByMenuId(menuId: Int): Fragment {
         val username = intent.getStringExtra(USER_NAME).orEmpty()
         return when (menuId) {
-            R.id.menu_main_search -> SearchFragment.newInstance()
-            R.id.menu_main_home -> HomeFragment.newInstance(username)
-            R.id.menu_main_my_page -> MyPageFragment.newInstance(username)
+            BottomNavItems.SEARCH.id -> SearchFragment.newInstance()
+            BottomNavItems.HOME.id -> HomeFragment.newInstance(username)
+            BottomNavItems.MY_PAGE.id -> MyPageFragment.newInstance(username)
             else -> throw IllegalArgumentException()
         }
     }
