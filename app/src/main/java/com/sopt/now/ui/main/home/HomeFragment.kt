@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.sopt.now.R
-import com.sopt.now.data.model.Friend
+import com.sopt.now.data.remote.response.GetFriendsResponse
 import com.sopt.now.data.remote.response.GetUserResponse
 import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.ui.common.base.BaseFactory
@@ -25,7 +25,9 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         setupDataBinding()
         setupAdapter()
         getUserInfo()
+        getFriendsInfo()
         observeUserInfo()
+        observeFriendsInfo()
     }
 
     private fun setupViewModel() {
@@ -46,12 +48,27 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         mainViewModel.getUserInfo(arguments?.getInt(USER_ID) ?: 0)
     }
 
+    private fun getFriendsInfo() {
+        mainViewModel.getFriendsInfo()
+    }
+
     private fun observeUserInfo() {
         mainViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
             if (userInfo != GetUserResponse.defaultUser) {
                 updateRecyclerView(
                     userInfo,
-                    Friend.dummyData.sortedBy { it.name },
+                    mainViewModel.friendsInfo.value ?: emptyList(),
+                )
+            }
+        }
+    }
+
+    private fun observeFriendsInfo() {
+        mainViewModel.friendsInfo.observe(viewLifecycleOwner) { friendList ->
+            if (friendList.isNotEmpty()) {
+                updateRecyclerView(
+                    mainViewModel.userInfo.value ?: GetUserResponse.defaultUser,
+                    friendList,
                 )
             }
         }
@@ -59,7 +76,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     private fun updateRecyclerView(
         userInfo: GetUserResponse.User,
-        friendList: List<Friend>,
+        friendList: List<GetFriendsResponse.Data>,
     ) {
         adapter.submitList(userInfo, friendList)
     }

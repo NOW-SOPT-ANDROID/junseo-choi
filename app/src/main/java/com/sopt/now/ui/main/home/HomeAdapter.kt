@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.sopt.now.data.model.Friend
+import com.sopt.now.data.remote.response.GetFriendsResponse
 import com.sopt.now.data.remote.response.GetUserResponse
 import com.sopt.now.databinding.ItemHomeFriendBinding
 import com.sopt.now.databinding.ItemHomeMineBinding
 
 class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(HomeDiffCallback()) {
     private var myProfile: GetUserResponse.User = GetUserResponse.defaultUser
-    private var friendList: List<Friend> = emptyList()
+    private var friendList: List<GetFriendsResponse.Data> = emptyList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -51,7 +51,7 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
 
     fun submitList(
         myProfile: GetUserResponse.User,
-        friendList: List<Friend>,
+        friendList: List<GetFriendsResponse.Data>,
     ) {
         this.myProfile = myProfile
         this.friendList = friendList
@@ -80,7 +80,7 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
     class FriendViewHolder private constructor(
         private val binding: ItemHomeFriendBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Friend) {
+        fun bind(item: GetFriendsResponse.Data) {
             binding.apply {
                 this.item = item
                 executePendingBindings()
@@ -99,7 +99,7 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
     sealed class HomeItem {
         data class Mine(val userInfo: GetUserResponse.User) : HomeItem()
 
-        data class FriendItem(val friend: Friend) : HomeItem()
+        data class FriendItem(val friend: GetFriendsResponse.Data) : HomeItem()
     }
 
     class HomeDiffCallback : DiffUtil.ItemCallback<HomeItem>() {

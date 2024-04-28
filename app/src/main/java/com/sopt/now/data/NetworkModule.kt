@@ -4,6 +4,7 @@ import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.sopt.now.BuildConfig
 import com.sopt.now.data.remote.service.AuthService
+import com.sopt.now.data.remote.service.FriendService
 import com.sopt.now.data.remote.service.UserService
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -13,8 +14,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 object NetworkModule {
-    private const val AUTH_BASE_URL = BuildConfig.AUTH_BASE_URL
-
     private const val CONTENT_TYPE = "application/json"
     private val json: Json =
         Json {
@@ -35,17 +34,19 @@ object NetworkModule {
             .addInterceptor(getLogOkHttpClient())
             .build()
 
-    val retrofit: Retrofit =
-        Retrofit.Builder()
-            .baseUrl(AUTH_BASE_URL)
+    fun provideRetrofit(url: String): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(url)
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(CONTENT_TYPE.toMediaType()))
             .build()
+    }
 
-    inline fun <reified T> create(): T = retrofit.create<T>(T::class.java)
+    inline fun <reified T> create(url: String): T = provideRetrofit(url).create<T>(T::class.java)
 }
 
 object ServicePool {
-    val authService = NetworkModule.create<AuthService>()
-    val userService = NetworkModule.create<UserService>()
+    val authService = NetworkModule.create<AuthService>(BuildConfig.AUTH_BASE_URL)
+    val userService = NetworkModule.create<UserService>(BuildConfig.AUTH_BASE_URL)
+    val friendService = NetworkModule.create<FriendService>(BuildConfig.FRIEND_BASE_URL)
 }

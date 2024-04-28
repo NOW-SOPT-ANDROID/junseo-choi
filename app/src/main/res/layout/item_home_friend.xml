@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.sopt.now.data.model.Friend" />
+            type="com.sopt.now.data.remote.response.GetFriendsResponse.Data" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +21,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             app:cornerRadius="@{30f}"
-            app:imageUrl="@{item.profileImageUrl}"
+            app:imageUrl="@{item.avatar}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,44 +32,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@{item.name}"
+            android:text="@{item.firstName}"
             android:textAppearance="@style/title1"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@id/tvHomeFriendPhoneNumber"
+            app:layout_constraintBottom_toTopOf="@id/tvHomeFriendEmail"
             app:layout_constraintStart_toEndOf="@id/ivHomeFriendProfile"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="심사숙고" />
 
         <TextView
-            android:id="@+id/tvHomeFriendPhoneNumber"
-            android:layout_width="124dp"
+            android:id="@+id/tvHomeFriendEmail"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
-            android:maxLines="2"
-            android:text="@{item.selfDescription}"
+            android:maxLines="1"
+            android:text="@{item.email}"
             android:textAppearance="@style/body2"
             android:textColor="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tvHomeFriendName"
             app:layout_constraintTop_toBottomOf="@id/tvHomeFriendName"
-            tools:text="안녕하세요 저는 감자" />
-
-        <TextView
-            android:id="@+id/tvHomeFriendMusic"
-            android:layout_width="132dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_home_radius_12dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="4dp"
-            android:text="@{item.profileMusicName}"
-            app:isVisible="@{!item.profileMusicName.isEmpty()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="거지 (Feat. YUNHWAY, Jhnovr, JUSTHIS) - 기리보이" />
+            tools:text="prime54@naver.com" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
