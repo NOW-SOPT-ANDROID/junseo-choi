@@ -31,7 +31,7 @@
     <string name="success_sign_in">로그인에 성공하셨습니다!</string>
 
     <!--    SignUpActivity    -->
-    <string name="success_sign_up">회원가입이 완료되었습니다.</string>
+    <string name="success_sign_up">%s번째 회원님 환영합니다!</string>
     <string name="main_bnv_home">홈</string>
     <string name="main_bnv_search">검색</string>
     <string name="main_bnv_my_page">마이페이지</string>

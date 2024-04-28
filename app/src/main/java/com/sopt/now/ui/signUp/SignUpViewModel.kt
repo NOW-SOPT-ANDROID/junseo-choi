@@ -19,7 +19,7 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
             runCatching {
                 ServicePool.authService.signUp(request)
             }.onSuccess {
-                _signUpMessage.value = it.message
+                _signUpMessage.value = SUCCESS_SIGN_UP + "/" + it.headers()["LOCATION"]
             }.onFailure {
                 if (it is HttpException) {
                     _signUpMessage.value =
@@ -27,5 +27,9 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
                 }
             }
         }
+    }
+
+    companion object {
+        const val SUCCESS_SIGN_UP = "SUCCESS"
     }
 }

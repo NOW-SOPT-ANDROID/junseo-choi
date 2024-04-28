@@ -11,6 +11,7 @@ import com.sopt.now.R
 import com.sopt.now.data.remote.request.SignUpRequest
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.ui.common.base.BaseFactory
+import com.sopt.now.ui.signUp.SignUpViewModel.Companion.SUCCESS_SIGN_UP
 import com.teamwss.websoso.ui.common.base.BindingActivity
 
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
@@ -48,8 +49,12 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
 
     private fun observeSignUpResult() {
         signUpViewModel.signUpMessage.observe(this) { message ->
-            if (message == getString(R.string.success_sign_up)) {
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            if (message.split("/")[0] == SUCCESS_SIGN_UP) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.success_sign_up, message.split("/")[1]),
+                    Toast.LENGTH_SHORT,
+                ).show()
                 finish()
                 return@observe
             }
