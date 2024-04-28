@@ -7,6 +7,8 @@ import com.sopt.now.R
 import com.sopt.now.databinding.FragmentMyPageBinding
 import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.main.MainViewModel
+import com.sopt.now.ui.passwordChange.PasswordChangeActivity
+import com.sopt.now.ui.signIn.SignInActivity
 import com.teamwss.websoso.ui.common.base.BindingFragment
 
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
@@ -20,7 +22,8 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
 
         setupViewModel()
         setupDataBinding()
-
+        setupPasswordChangeButtonListener()
+        setupSignOutButtonListener()
         loadUserInfo()
     }
 
@@ -32,6 +35,30 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
     private fun setupDataBinding() {
         binding.mainViewModel = mainViewModel
         binding.lifecycleOwner = this
+    }
+
+    private fun setupPasswordChangeButtonListener() {
+        binding.tvMyPagePasswordChange.setOnClickListener {
+            navigateToPasswordChangeActivity()
+        }
+    }
+
+    private fun navigateToPasswordChangeActivity() {
+        val intent =
+            PasswordChangeActivity.newIntent(requireContext(), arguments?.getInt(USER_ID) ?: 0)
+        startActivity(intent)
+    }
+
+    private fun setupSignOutButtonListener() {
+        binding.tvMyPageSignOut.setOnClickListener {
+            navigateToSignInActivity()
+        }
+    }
+
+    private fun navigateToSignInActivity() {
+        val intent = SignInActivity.newIntent(requireContext())
+        startActivity(intent)
+        requireActivity().finish()
     }
 
     private fun loadUserInfo() {

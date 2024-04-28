@@ -22,11 +22,6 @@
     <string name="tv_sign_up_button">Submit</string>
 
     <!--    SignInActivity    -->
-    <string name="error_sign_in_username_blank">아이디를 입력해주세요.</string>
-    <string name="error_sign_in_password_blank">비밀번호를 입력해주세요.</string>
-    <string name="error_sign_in_username_wrong">존재하지 않는 아이디입니다.</string>
-    <string name="error_sign_in_password_wrong">비밀번호가 일치하지 않습니다.</string>
-    <string name="error_sign_in_failure">로그인에 실패하였습니다.</string>
     <string name="success_sign_in">로그인에 성공하셨습니다!</string>
 
     <!--    SignUpActivity    -->
@@ -38,5 +33,14 @@
     <!--    Temp    -->
     <string name="temp_profile_image_url">https://avatars.githubusercontent.com/u/127238018?v=4</string>
     <string name="temp_profile_background_image_url">https://pbs.twimg.com/media/GJsSN8hagAMUyak?format=jpg&amp;name=large</string>
+
+    <!--   activity_password_change    -->
+    <string name="tv_password_change_title">🔒Password Change</string>
+    <string name="tl_password_change_current">Current Password</string>
+    <string name="tl_password_change_to_change">Password To Change</string>
+    <string name="tl_password_change_confirm">Password Confirm</string>
+
+    <!--   fragment_my_page    -->
+    <string name="tv_my_page_password_change">비밀번호 변경</string>
 
 </resources>

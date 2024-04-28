@@ -34,6 +34,10 @@
             android:name=".ui.signUp.SignUpActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.passwordChange.PasswordChangeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

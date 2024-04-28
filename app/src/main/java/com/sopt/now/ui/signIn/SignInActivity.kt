@@ -1,5 +1,7 @@
 package com.sopt.now.ui.signIn
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -68,6 +70,12 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
         binding.viewSignInSignUpButton.setOnClickListener {
             val intent = SignUpActivity.newIntent(this)
             startActivity(intent)
+        }
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, SignInActivity::class.java)
         }
     }
 }

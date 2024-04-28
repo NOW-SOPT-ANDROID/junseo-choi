@@ -76,7 +76,7 @@
             tools:text="prime54" />
 
         <TextView
-            android:id="@+id/tvMyPageDrinkCapacityTitle"
+            android:id="@+id/tvMyPagePhoneNumberTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
@@ -88,16 +88,43 @@
             app:layout_constraintTop_toBottomOf="@id/tvMyPageUsernameTitle" />
 
         <TextView
-            android:id="@+id/tvMyPageDrinkCapacity"
+            android:id="@+id/tvMyPagePhoneNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="80dp"
             android:text="@{mainViewModel.userInfo.phone}"
             android:textAppearance="@style/body1"
-            app:layout_constraintBottom_toBottomOf="@id/tvMyPageDrinkCapacityTitle"
+            app:layout_constraintBottom_toBottomOf="@id/tvMyPagePhoneNumberTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvMyPageDrinkCapacityTitle"
+            app:layout_constraintTop_toTopOf="@id/tvMyPagePhoneNumberTitle"
             tools:text="010-0000-0000" />
+
+        <TextView
+            android:id="@+id/tvMyPagePasswordChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="-20dp"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="6dp"
+            android:text="@string/tv_my_page_password_change"
+            android:textAppearance="@style/body2"
+            android:textColor="@color/gray"
+            app:layout_constraintEnd_toEndOf="@id/tvMyPagePhoneNumber"
+            app:layout_constraintTop_toBottomOf="@id/tvMyPagePhoneNumber" />
+
+        <TextView
+            android:id="@+id/tvMyPageSignOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="-20dp"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="6dp"
+            android:text="로그아웃"
+            android:textAppearance="@style/body2"
+            android:textColor="@color/gray"
+            app:layout_constraintEnd_toEndOf="@id/tvMyPagePhoneNumber"
+            app:layout_constraintTop_toBottomOf="@id/tvMyPagePasswordChange" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
