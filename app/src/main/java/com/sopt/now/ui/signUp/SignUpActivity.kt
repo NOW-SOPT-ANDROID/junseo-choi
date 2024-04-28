@@ -36,13 +36,24 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
             val nickname = binding.etSignUpNickname.text.toString()
             val drinkCapacity = binding.sliderSignUpDrinkCapacity.value
 
-            signUpViewModel.performSignUp(username, password, nickname, drinkCapacity)
+            signUpViewModel.checkIsInputValidAndSignUp(username, password, nickname, drinkCapacity)
         }
     }
 
     private fun observeSignUpResult() {
         signUpViewModel.uiState.observe(this) { state ->
             when (state) {
+                SignUpUiState.UsernameBlank -> {
+                    binding.etSignUpUsername.error = getString(R.string.error_sign_up_username_blank)
+                }
+
+                SignUpUiState.PasswordBlank -> {
+                    binding.etSignUpPassword.error = getString(R.string.error_sign_up_password_blank)
+                }
+
+                SignUpUiState.NicknameBlank -> {
+                    binding.etSignUpNickname.error = getString(R.string.error_sign_up_nickname_blank)
+                }
                 SignUpUiState.UsernameError -> {
                     binding.etSignUpUsername.error = getString(R.string.error_sign_up_username)
                 }
@@ -51,18 +62,12 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
                     binding.etSignUpPassword.error = getString(R.string.error_sign_up_password)
                 }
 
-                SignUpUiState.NicknameError -> {
-                    binding.etSignUpNickname.error = getString(R.string.error_sign_up_nickname)
-                }
-
                 SignUpUiState.UsernameTaken -> {
-                    binding.etSignUpUsername.error =
-                        getString(R.string.error_sign_up_username_taken)
+                    binding.etSignUpUsername.error = getString(R.string.error_sign_up_username_taken)
                 }
 
                 SignUpUiState.NicknameTaken -> {
-                    binding.etSignUpNickname.error =
-                        getString(R.string.error_sign_up_nickname_taken)
+                    binding.etSignUpNickname.error = getString(R.string.error_sign_up_nickname_taken)
                 }
 
                 SignUpUiState.Success -> {

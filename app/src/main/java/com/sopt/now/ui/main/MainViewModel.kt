@@ -14,10 +14,6 @@ class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _userInfo = MutableLiveData<UserInfoEntity>(UserInfoEntity.defaultUserInfo)
     val userInfo: LiveData<UserInfoEntity> = _userInfo
 
-    val tempProfileImageUrl: String = "https://avatars.githubusercontent.com/u/127238018?v=4"
-    val tempProfileBackgroundImageUrl: String =
-        "https://pbs.twimg.com/media/GJsSN8hagAMUyak?format=jpg&name=large"
-
     fun getUserInfo(username: String) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
