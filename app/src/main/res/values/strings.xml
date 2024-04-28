@@ -19,7 +19,7 @@
     <string name="tl_sign_up_username">Username</string>
     <string name="tl_sign_up_password">Password</string>
     <string name="tl_sign_up_nickname">Nickname</string>
-    <string name="tv_sign_up_drink_capacity">Drink Capacity</string>
+    <string name="tv_sign_up_phone_number">PhoneNumber</string>
     <string name="tv_sign_up_button">Submit</string>
 
     <!--    SignInActivity    -->
