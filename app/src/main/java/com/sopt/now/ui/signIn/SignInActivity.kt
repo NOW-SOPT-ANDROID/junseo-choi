@@ -3,8 +3,9 @@ package com.sopt.now.ui.signIn
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.sopt.now.NowSopt
+import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
+import com.sopt.now.data.remote.request.SignInRequest
 import com.sopt.now.databinding.ActivitySignInBinding
 import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.main.MainActivity
@@ -19,61 +20,48 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
 
         setupViewModel()
         setupSignInButtonListener()
-        setupNavigateToSignUpListener()
-
         observeSignInResult()
+        setupNavigateToSignUpListener()
     }
 
     private fun setupViewModel() {
-        val factory = BaseFactory { SignInViewModel(NowSopt.getUserRepository()) }
+        val factory = BaseFactory { SignInViewModel() }
         signInViewModel = ViewModelProvider(this, factory)[SignInViewModel::class.java]
-    }
-
-    private fun observeSignInResult() {
-        signInViewModel.uiState.observe(this) { state ->
-            when (state) {
-                SignInUiState.UsernameBlank -> {
-                    binding.etSignInUsername.error =
-                        getString(R.string.error_sign_in_username_blank)
-                }
-
-                SignInUiState.PasswordBlank -> {
-                    binding.etSignInPassword.error =
-                        getString(R.string.error_sign_in_password_blank)
-                }
-
-                SignInUiState.UsernameWrong -> {
-                    binding.etSignInUsername.error =
-                        getString(R.string.error_sign_in_username_wrong)
-                }
-
-                SignInUiState.PasswordWrong -> {
-                    binding.etSignInPassword.error =
-                        getString(R.string.error_sign_in_password_wrong)
-                }
-
-                SignInUiState.Failure -> {
-                    binding.etSignInUsername.error = getString(R.string.error_sign_in_failure)
-                }
-
-                SignInUiState.Success -> {
-                    Toast.makeText(this, getString(R.string.success_sign_in), Toast.LENGTH_SHORT)
-                        .show()
-                    navigateToMainActivity()
-                }
-
-                else -> {}
-            }
-        }
     }
 
     private fun setupSignInButtonListener() {
         binding.viewSignInButton.setOnClickListener {
-            signInViewModel.checkIsInputValidAndSignIn(
-                binding.etSignInUsername.text.toString(),
-                binding.etSignInPassword.text.toString(),
-            )
+            performSignIn()
         }
+    }
+
+    private fun performSignIn() {
+        val inputUsername: String = binding.etSignInUsername.text.toString()
+        val inputPassword: String = binding.etSignInPassword.text.toString()
+
+        signInViewModel.performSignIn(SignInRequest(inputUsername, inputPassword))
+    }
+
+    private fun observeSignInResult() {
+        signInViewModel.signInMessage.observe(this) { message ->
+            if (message.split("/")[0] == SignInViewModel.SUCCESS_SIGN_IN) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.success_sign_in),
+                    Toast.LENGTH_SHORT,
+                ).show()
+                navigateToMainActivity(message.split("/")[1].toInt())
+                finish()
+            } else {
+                Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun navigateToMainActivity(userId: Int) {
+        val intent = MainActivity.newIntent(this, userId)
+        startActivity(intent)
+        finish()
     }
 
     private fun setupNavigateToSignUpListener() {
@@ -81,12 +69,5 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
             val intent = SignUpActivity.newIntent(this)
             startActivity(intent)
         }
-    }
-
-    private fun navigateToMainActivity() {
-        val inputUsername: String = binding.etSignInUsername.text.toString()
-        val intent = MainActivity.newIntent(this, inputUsername)
-        startActivity(intent)
-        finish()
     }
 }

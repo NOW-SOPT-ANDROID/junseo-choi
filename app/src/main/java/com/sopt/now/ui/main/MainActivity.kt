@@ -79,10 +79,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
         fun newIntent(
             context: Context,
-            username: String,
+            userId: Int,
         ): Intent {
             return Intent(context, MainActivity::class.java).apply {
-                putExtra(USER_NAME, username)
+                putExtra(USER_NAME, userId)
             }
         }
     }

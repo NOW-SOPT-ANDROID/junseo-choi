@@ -9,7 +9,7 @@ import com.sopt.now.data.remote.request.SignUpRequest
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class SignUpViewModel() : ViewModel() {
+class SignUpViewModel : ViewModel() {
     private val _signUpMessage = MutableLiveData<String>()
     val signUpMessage: LiveData<String> = _signUpMessage
 

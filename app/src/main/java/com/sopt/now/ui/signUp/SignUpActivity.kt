@@ -55,9 +55,9 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
                     Toast.LENGTH_SHORT,
                 ).show()
                 finish()
-                return@observe
+            } else {
+                Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
             }
-            Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
         }
     }
 
