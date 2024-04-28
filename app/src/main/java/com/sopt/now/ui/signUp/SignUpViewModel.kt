@@ -6,11 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.data.ServicePool
 import com.sopt.now.data.remote.request.SignUpRequest
-import com.sopt.now.data.repository.UserRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() {
+class SignUpViewModel() : ViewModel() {
     private val _signUpMessage = MutableLiveData<String>()
     val signUpMessage: LiveData<String> = _signUpMessage
 

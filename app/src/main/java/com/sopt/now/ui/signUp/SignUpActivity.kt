@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
-import com.sopt.now.NowSopt
 import com.sopt.now.R
 import com.sopt.now.data.remote.request.SignUpRequest
 import com.sopt.now.databinding.ActivitySignUpBinding
@@ -26,7 +25,7 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
     }
 
     private fun setupViewModel() {
-        val factory = BaseFactory { SignUpViewModel(NowSopt.getUserRepository()) }
+        val factory = BaseFactory { SignUpViewModel() }
         signUpViewModel = ViewModelProvider(this, factory)[SignUpViewModel::class.java]
     }
 
