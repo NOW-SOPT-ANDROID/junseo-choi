@@ -19,13 +19,9 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
         viewType: Int,
     ): RecyclerView.ViewHolder {
         return when (viewType) {
-            VIEW_TYPE_MINE -> {
-                MineViewHolder.from(parent)
-            }
+            VIEW_TYPE_MINE -> MineViewHolder.from(parent)
 
-            VIEW_TYPE_FRIEND -> {
-                FriendViewHolder.from(parent)
-            }
+            VIEW_TYPE_FRIEND -> FriendViewHolder.from(parent)
 
             else -> throw IllegalArgumentException()
         }
