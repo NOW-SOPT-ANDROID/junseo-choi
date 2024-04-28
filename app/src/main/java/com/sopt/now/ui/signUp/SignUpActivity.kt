@@ -3,6 +3,7 @@ package com.sopt.now.ui.signUp
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.NowSopt
@@ -47,6 +48,11 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
 
     private fun observeSignUpResult() {
         signUpViewModel.signUpMessage.observe(this) { message ->
+            if (message == getString(R.string.success_sign_up)) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                finish()
+                return@observe
+            }
             Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
         }
     }
