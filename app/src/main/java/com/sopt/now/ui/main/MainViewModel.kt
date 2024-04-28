@@ -21,7 +21,7 @@ class MainViewModel : ViewModel() {
 
         viewModelScope.launch {
             runCatching {
-                ServicePool.authService.getUserInfo(userId)
+                ServicePool.userService.getUserInfo(userId)
             }.onSuccess {
                 _userInfo.value = it.body()?.data ?: GetUserResponse.defaultUser
             }.onFailure {
