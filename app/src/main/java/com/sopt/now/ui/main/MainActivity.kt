@@ -31,8 +31,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initDefaultFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            val homeFragment = HomeFragment.newInstance(username)
-            changeFragment(homeFragment)
+            changeFragment(HomeFragment.newInstance(username))
         }
         binding.bnvMain.selectedItemId = R.id.menu_main_home
     }
