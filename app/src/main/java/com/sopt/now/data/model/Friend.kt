@@ -1,11 +1,6 @@
 package com.sopt.now.data.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "user_table")
 data class Friend(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val profileImageUrl: String,
     val selfDescription: String,
