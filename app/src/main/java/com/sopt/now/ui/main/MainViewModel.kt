@@ -5,23 +5,27 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.data.model.UserInfoEntity
-import com.sopt.now.data.repository.UserRepository
-import kotlinx.coroutines.Dispatchers
+import com.sopt.now.data.ServicePool
+import com.sopt.now.data.remote.response.GetUserResponse
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
-    private val _userInfo = MutableLiveData<UserInfoEntity>(UserInfoEntity.defaultUserInfo)
-    val userInfo: LiveData<UserInfoEntity> = _userInfo
+class MainViewModel : ViewModel() {
+    private val _userInfo = MutableLiveData<GetUserResponse.User>()
+    val userInfo: LiveData<GetUserResponse.User> = _userInfo
 
-    fun getUserInfo(username: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+    fun getUserInfo(userId: Int) {
+        if (userId == 0) {
+            _userInfo.value = GetUserResponse.defaultUser
+            return
+        }
+
+        viewModelScope.launch {
             runCatching {
-                userRepository.getUserInfo(username)
-            }.onSuccess { userInfo ->
-                _userInfo.postValue(userInfo)
+                ServicePool.authService.getUserInfo(userId)
+            }.onSuccess {
+                _userInfo.value = it.body()?.data ?: GetUserResponse.defaultUser
             }.onFailure {
-                Log.e("MainViewModel", "Failed to get user info", it)
+                Log.e("MainViewModel", "getUserInfo: $it")
             }
         }
     }

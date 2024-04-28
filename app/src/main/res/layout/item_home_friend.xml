@@ -35,13 +35,13 @@
             android:text="@{item.name}"
             android:textAppearance="@style/title1"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@id/tvHomeFriendSelfDescription"
+            app:layout_constraintBottom_toTopOf="@id/tvHomeFriendPhoneNumber"
             app:layout_constraintStart_toEndOf="@id/ivHomeFriendProfile"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="심사숙고" />
 
         <TextView
-            android:id="@+id/tvHomeFriendSelfDescription"
+            android:id="@+id/tvHomeFriendPhoneNumber"
             android:layout_width="124dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"

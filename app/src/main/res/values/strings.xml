@@ -3,9 +3,8 @@
 
     <!--    activity_main   -->
     <string name="tv_main_title">NOW SOPT HOMEWORK</string>
-    <string name="tv_main_username_title">USERNAME</string>
-    <string name="tv_main_password_title">PASSWORD</string>
-    <string name="tv_main_drink_capacity_title">DRINK CAPACITY</string>
+    <string name="tv_main_username_title">ID</string>
+    <string name="tv_main_drink_capacity_title">HP</string>
 
     <!--    activity_sign_in    -->
     <string name="tv_sign_in_title">Welcome to SOPT 👊</string>
@@ -39,6 +38,5 @@
     <!--    Temp    -->
     <string name="temp_profile_image_url">https://avatars.githubusercontent.com/u/127238018?v=4</string>
     <string name="temp_profile_background_image_url">https://pbs.twimg.com/media/GJsSN8hagAMUyak?format=jpg&amp;name=large</string>
-    <string name="temp_profile_self_description">안녕하세요 저는 감자인데요, 아무말이나 이것저것 써볼까 합니다</string>
 
 </resources>

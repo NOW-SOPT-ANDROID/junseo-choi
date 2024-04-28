@@ -18,7 +18,11 @@ class SignUpViewModel : ViewModel() {
             runCatching {
                 ServicePool.authService.signUp(request)
             }.onSuccess {
-                _signUpMessage.value = SUCCESS_SIGN_UP + "/" + it.headers()["LOCATION"]
+                if (it.code() in 200..299) {
+                    _signUpMessage.value = SUCCESS_SIGN_UP + "/" + it.headers()["LOCATION"]
+                } else {
+                    _signUpMessage.value = it.errorBody()?.string()?.split("\"")?.get(5)
+                }
             }.onFailure {
                 if (it is HttpException) {
                     _signUpMessage.value =

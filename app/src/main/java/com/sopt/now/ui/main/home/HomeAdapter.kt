@@ -6,13 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sopt.now.data.model.Friend
-import com.sopt.now.data.model.UserInfoEntity
+import com.sopt.now.data.remote.response.GetUserResponse
 import com.sopt.now.databinding.ItemHomeFriendBinding
 import com.sopt.now.databinding.ItemHomeMineBinding
 
 class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(HomeDiffCallback()) {
-    private lateinit var myProfile: UserInfoEntity
-    private lateinit var friendList: List<Friend>
+    private var myProfile: GetUserResponse.User = GetUserResponse.defaultUser
+    private var friendList: List<Friend> = emptyList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -46,11 +46,11 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
     }
 
     override fun getItemCount(): Int {
-        return friendList.size + MINE_PROFILE_COUNT
+        return friendList.size + if (myProfile != GetUserResponse.defaultUser) MINE_PROFILE_COUNT else 0
     }
 
     fun submitList(
-        myProfile: UserInfoEntity,
+        myProfile: GetUserResponse.User,
         friendList: List<Friend>,
     ) {
         this.myProfile = myProfile
@@ -61,7 +61,7 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
     class MineViewHolder private constructor(
         private val binding: ItemHomeMineBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: UserInfoEntity) {
+        fun bind(item: GetUserResponse.User) {
             binding.apply {
                 this.item = item
                 executePendingBindings()
@@ -97,7 +97,7 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
     }
 
     sealed class HomeItem {
-        data class Mine(val userInfo: UserInfoEntity) : HomeItem()
+        data class Mine(val userInfo: GetUserResponse.User) : HomeItem()
 
         data class FriendItem(val friend: Friend) : HomeItem()
     }

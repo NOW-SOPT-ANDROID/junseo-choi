@@ -3,10 +3,9 @@ package com.sopt.now.ui.main.home
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import com.sopt.now.NowSopt
 import com.sopt.now.R
 import com.sopt.now.data.model.Friend
-import com.sopt.now.data.model.UserInfoEntity
+import com.sopt.now.data.remote.response.GetUserResponse
 import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.main.MainViewModel
@@ -30,7 +29,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun setupViewModel() {
-        val mainFactory = BaseFactory { MainViewModel(NowSopt.getUserRepository()) }
+        val mainFactory = BaseFactory { MainViewModel() }
         mainViewModel = ViewModelProvider(this, mainFactory)[MainViewModel::class.java]
     }
 
@@ -44,30 +43,35 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun getUserInfo() {
-        mainViewModel.getUserInfo(arguments?.getString(USER_NAME).orEmpty())
+        mainViewModel.getUserInfo(arguments?.getInt(USER_ID) ?: 0)
     }
 
     private fun observeUserInfo() {
         mainViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
-            updateRecyclerView(userInfo, Friend.dummyData.sortedBy { it.name })
+            if (userInfo != GetUserResponse.defaultUser) {
+                updateRecyclerView(
+                    userInfo,
+                    Friend.dummyData.sortedBy { it.name },
+                )
+            }
         }
     }
 
     private fun updateRecyclerView(
-        userInfo: UserInfoEntity,
+        userInfo: GetUserResponse.User,
         friendList: List<Friend>,
     ) {
         adapter.submitList(userInfo, friendList)
     }
 
     companion object {
-        private const val USER_NAME = "USER_NAME"
+        private const val USER_ID = "USER_ID"
 
-        fun newInstance(username: String): HomeFragment {
+        fun newInstance(userId: Int): HomeFragment {
             return HomeFragment().apply {
                 arguments =
                     Bundle().apply {
-                        putString(USER_NAME, username)
+                        putInt(USER_ID, userId)
                     }
             }
         }
