@@ -1,8 +1,8 @@
 package com.sopt.now.compose.data.remote.service
 
-import com.sopt.now.data.remote.request.ChangePasswordRequest
-import com.sopt.now.data.remote.response.ChangePasswordResponse
-import com.sopt.now.data.remote.response.GetUserResponse
+import com.sopt.now.compose.data.remote.request.ChangePasswordRequest
+import com.sopt.now.compose.data.remote.response.ChangePasswordResponse
+import com.sopt.now.compose.data.remote.response.GetUserResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

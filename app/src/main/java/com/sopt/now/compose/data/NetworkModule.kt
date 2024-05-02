@@ -3,9 +3,9 @@ package com.sopt.now.compose.data
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.sopt.now.BuildConfig
-import com.sopt.now.data.remote.service.AuthService
-import com.sopt.now.data.remote.service.FriendService
-import com.sopt.now.data.remote.service.UserService
+import com.sopt.now.compose.data.remote.service.AuthService
+import com.sopt.now.compose.data.remote.service.FriendService
+import com.sopt.now.compose.data.remote.service.UserService
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
