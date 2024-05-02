@@ -23,7 +23,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getString
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.sopt.now.compose.R
@@ -52,7 +51,7 @@ fun SignInScreen(navController: NavController) {
             if (it.split("/")[0] == SignInViewModel.SUCCESS_SIGN_IN) {
                 Toast.makeText(
                     context,
-                    getString(context, R.string.sign_in_success),
+                    context.getString(R.string.sign_in_success),
                     Toast.LENGTH_SHORT,
                 ).show()
                 navController.navigate(Screen.Home.route + "/${it.split("/")[1].toInt()}")
@@ -98,6 +97,7 @@ fun SignInScreen(navController: NavController) {
         }
         TextButton(
             onClick = {
+                navController.navigate(Screen.SignUp.route)
             },
             modifier =
                 Modifier
