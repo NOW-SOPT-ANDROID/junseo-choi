@@ -50,7 +50,11 @@ fun SignInScreen(navController: NavController) {
     LaunchedEffect(signInMessage.value) {
         signInMessage.value?.let {
             if (it.split("/")[0] == SignInViewModel.SUCCESS_SIGN_IN) {
-                getString(context, R.string.sign_in_success)
+                Toast.makeText(
+                    context,
+                    getString(context, R.string.sign_in_success),
+                    Toast.LENGTH_SHORT,
+                ).show()
                 navController.navigate(Screen.Home.route + "/${it.split("/")[1].toInt()}")
             } else {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
