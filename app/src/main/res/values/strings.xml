@@ -17,9 +17,7 @@
     <!--  SignInScreen  -->
     <string name="sign_in_title">로그인</string>
     <string name="sign_in_button">로그인</string>
-    <string name="sign_in_blank_error">정보를 모두 입력해주세요.</string>
     <string name="sign_in_success">로그인에 성공하셨습니다!</string>
-    <string name="user_info_not_match">회원 정보가 일치하지 않습니다.</string>
 
     <!--  BottomNav  -->
     <string name="main_home">홈</string>
