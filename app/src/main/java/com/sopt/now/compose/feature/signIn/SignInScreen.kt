@@ -1,6 +1,7 @@
 package com.sopt.now.compose.feature.signIn
 
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,6 +29,7 @@ import androidx.navigation.NavController
 import com.sopt.now.compose.R
 import com.sopt.now.compose.data.remote.request.SignInRequest
 import com.sopt.now.compose.feature.common.base.BaseFactory
+import com.sopt.now.compose.feature.main.MainViewModel
 import com.sopt.now.compose.model.Screen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 
@@ -37,12 +39,17 @@ fun SignInScreen(navController: NavController) {
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
 
-    val factory = BaseFactory { SignInViewModel() }
     val signInViewModel =
         ViewModelProvider(
-            context as androidx.activity.ComponentActivity,
-            factory,
+            context as ComponentActivity,
+            BaseFactory { SignInViewModel() },
         )[SignInViewModel::class.java]
+
+    val mainViewModel =
+        ViewModelProvider(
+            context,
+            BaseFactory { MainViewModel() },
+        )[MainViewModel::class.java]
 
     val signInMessage = signInViewModel.signInMessage.observeAsState()
 
@@ -54,7 +61,9 @@ fun SignInScreen(navController: NavController) {
                     context.getString(R.string.sign_in_success),
                     Toast.LENGTH_SHORT,
                 ).show()
-                navController.navigate(Screen.Home.route + "/${it.split("/")[1].toInt()}")
+                val userId = it.split("/")[1].toInt()
+                mainViewModel.getUserInfo(userId)
+                navController.navigate(Screen.Home.route)
             } else {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             }
@@ -93,7 +102,7 @@ fun SignInScreen(navController: NavController) {
                     .fillMaxWidth()
                     .padding(top = 16.dp),
         ) {
-            Text("로그인")
+            Text(text = stringResource(id = R.string.sign_in_title))
         }
         TextButton(
             onClick = {

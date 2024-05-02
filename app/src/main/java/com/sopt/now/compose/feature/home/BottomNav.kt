@@ -40,8 +40,7 @@ fun BottomNav(navController: NavController) {
                 label = { Text(stringResource(id = item.title)) },
                 selected = currentRoute == item.route,
                 onClick = {
-                    val username = if (item.title == BottomNavItem.Search.title) "" else "/prime54"
-                    navController.navigate(item.route + username) {
+                    navController.navigate(item.route) {
                         navController.graph.startDestinationRoute?.let { route ->
                             popUpTo(route) {
                                 saveState = true

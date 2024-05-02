@@ -1,6 +1,5 @@
 package com.sopt.now.compose.feature.signUp
 
-import android.content.Context
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
@@ -25,7 +24,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.sopt.now.compose.R
@@ -33,8 +31,6 @@ import com.sopt.now.compose.data.remote.request.SignUpRequest
 import com.sopt.now.compose.feature.common.base.BaseFactory
 import com.sopt.now.compose.model.Screen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
-
-val Context.dataStore by preferencesDataStore(name = "userPreferences")
 
 @Composable
 fun SignUpScreen(navController: NavController) {
@@ -45,11 +41,10 @@ fun SignUpScreen(navController: NavController) {
 
     val context = LocalContext.current
 
-    val factory = BaseFactory { SignUpViewModel() }
     val signUpViewModel =
         ViewModelProvider(
             context as ComponentActivity,
-            factory,
+            BaseFactory { SignUpViewModel() },
         )[SignUpViewModel::class.java]
 
     val signUpMessage = signUpViewModel.signUpMessage.observeAsState()
