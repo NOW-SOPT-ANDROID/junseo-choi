@@ -41,7 +41,6 @@ class PasswordChangeActivity :
                 binding.etPasswordChangeToChange.text.toString(),
                 binding.etPasswordChangeConfirm.text.toString(),
             )
-
         passwordChangeViewModel.performPasswordChange(userId, input)
     }
 
