@@ -4,31 +4,23 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
 import com.sopt.now.data.remote.request.SignInRequest
 import com.sopt.now.databinding.ActivitySignInBinding
-import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.main.MainActivity
 import com.sopt.now.ui.signUp.SignUpActivity
 import com.teamwss.websoso.ui.common.base.BindingActivity
 
 class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_sign_in) {
-    private lateinit var signInViewModel: SignInViewModel
+    private val signInViewModel: SignInViewModel by lazy { SignInViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setupViewModel()
         setupSignInButtonListener()
         observeSignInResult()
         setupNavigateToSignUpListener()
-    }
-
-    private fun setupViewModel() {
-        val factory = BaseFactory { SignInViewModel() }
-        signInViewModel = ViewModelProvider(this, factory)[SignInViewModel::class.java]
     }
 
     private fun setupSignInButtonListener() {

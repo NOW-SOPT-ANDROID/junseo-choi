@@ -5,7 +5,6 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.sopt.now.R
 import com.sopt.now.databinding.FragmentMyPageBinding
-import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.main.MainViewModel
 import com.sopt.now.ui.passwordChange.PasswordChangeActivity
 import com.sopt.now.ui.signIn.SignInActivity
@@ -28,8 +27,7 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
     }
 
     private fun setupViewModel() {
-        val factory = BaseFactory { MainViewModel() }
-        mainViewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
     }
 
     private fun setupDataBinding() {

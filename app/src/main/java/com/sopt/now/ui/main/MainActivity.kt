@@ -4,17 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivityMainBinding
-import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.main.home.HomeFragment
 import com.sopt.now.ui.main.myPage.MyPageFragment
 import com.sopt.now.ui.main.search.SearchFragment
 import com.teamwss.websoso.ui.common.base.BindingActivity
 
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
-    private lateinit var mainViewModel: MainViewModel
+    private val mainViewModel: MainViewModel by lazy { MainViewModel() }
     private var userId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +20,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         getUserId()
         initDefaultFragment(savedInstanceState)
 
-        setupViewModel()
         setupDataBinding()
         setupBottomNavigation()
     }
@@ -42,11 +39,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         supportFragmentManager.beginTransaction()
             .replace(R.id.fcvMain, fragment)
             .commit()
-    }
-
-    private fun setupViewModel() {
-        val factory = BaseFactory { MainViewModel() }
-        mainViewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
     }
 
     private fun setupDataBinding() {
