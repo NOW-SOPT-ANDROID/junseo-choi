@@ -5,10 +5,10 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.sopt.now.R
 import com.sopt.now.databinding.FragmentMyPageBinding
+import com.sopt.now.ui.common.base.BindingFragment
 import com.sopt.now.ui.main.MainViewModel
 import com.sopt.now.ui.passwordChange.PasswordChangeActivity
 import com.sopt.now.ui.signIn.SignInActivity
-import com.teamwss.websoso.ui.common.base.BindingFragment
 
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
     private lateinit var mainViewModel: MainViewModel

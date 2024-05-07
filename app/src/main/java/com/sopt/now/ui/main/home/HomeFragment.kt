@@ -6,8 +6,8 @@ import com.sopt.now.R
 import com.sopt.now.data.remote.response.GetFriendsResponse
 import com.sopt.now.data.remote.response.GetUserResponse
 import com.sopt.now.databinding.FragmentHomeBinding
+import com.sopt.now.ui.common.base.BindingFragment
 import com.sopt.now.ui.main.MainViewModel
-import com.teamwss.websoso.ui.common.base.BindingFragment
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val mainViewModel: MainViewModel by lazy { MainViewModel() }

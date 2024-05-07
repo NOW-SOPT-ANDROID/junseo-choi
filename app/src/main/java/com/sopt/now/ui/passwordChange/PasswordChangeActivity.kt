@@ -8,8 +8,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
 import com.sopt.now.data.remote.request.ChangePasswordRequest
 import com.sopt.now.databinding.ActivityPasswordChangeBinding
+import com.sopt.now.ui.common.base.BindingActivity
 import com.sopt.now.ui.passwordChange.PasswordChangeViewModel.Companion.SUCCESS_PASSWORD_CHANGE
-import com.teamwss.websoso.ui.common.base.BindingActivity
 
 class PasswordChangeActivity :
     BindingActivity<ActivityPasswordChangeBinding>(R.layout.activity_password_change) {

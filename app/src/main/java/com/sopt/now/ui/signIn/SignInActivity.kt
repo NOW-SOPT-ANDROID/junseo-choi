@@ -8,9 +8,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
 import com.sopt.now.data.remote.request.SignInRequest
 import com.sopt.now.databinding.ActivitySignInBinding
+import com.sopt.now.ui.common.base.BindingActivity
 import com.sopt.now.ui.main.MainActivity
 import com.sopt.now.ui.signUp.SignUpActivity
-import com.teamwss.websoso.ui.common.base.BindingActivity
 
 class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_sign_in) {
     private val signInViewModel: SignInViewModel by lazy { SignInViewModel() }

@@ -6,10 +6,10 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivityMainBinding
+import com.sopt.now.ui.common.base.BindingActivity
 import com.sopt.now.ui.main.home.HomeFragment
 import com.sopt.now.ui.main.myPage.MyPageFragment
 import com.sopt.now.ui.main.search.SearchFragment
-import com.teamwss.websoso.ui.common.base.BindingActivity
 
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val mainViewModel: MainViewModel by lazy { MainViewModel() }
