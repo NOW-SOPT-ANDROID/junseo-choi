@@ -35,7 +35,7 @@ import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 fun MyPageScreen(navController: NavController) {
     val context = LocalContext.current
     val mainViewModel = provideMainViewModel(context)
-    val userInfo = mainViewModel.userInfo.observeAsState(UserResponse.defaultUser).value
+    val userInfo = mainViewModel.userInfo.observeAsState(UserResponse.User.defaultUser).value
 
     Scaffold(bottomBar = { BottomNav(navController = navController) }) { paddingValues ->
         UserInfoDisplay(modifier = Modifier.padding(paddingValues), userInfo = userInfo)

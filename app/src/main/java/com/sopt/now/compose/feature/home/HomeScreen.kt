@@ -42,7 +42,7 @@ fun HomeScreen(navController: NavController) {
             BaseFactory { MainViewModel() },
         )[MainViewModel::class.java]
 
-    val userInfo = mainViewModel.userInfo.observeAsState(UserResponse.defaultUser).value
+    val userInfo = mainViewModel.userInfo.observeAsState(UserResponse.User.defaultUser).value
     val friends = mainViewModel.friendsInfo.observeAsState(emptyList()).value
 
     mainViewModel.getFriendsInfo()
