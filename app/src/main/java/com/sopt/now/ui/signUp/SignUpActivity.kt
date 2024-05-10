@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
 import com.sopt.now.data.remote.request.SignUpRequest
@@ -12,10 +13,11 @@ import com.sopt.now.ui.common.base.BindingActivity
 import com.sopt.now.ui.signUp.SignUpViewModel.Companion.SUCCESS_SIGN_UP
 
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
-    private val signUpViewModel: SignUpViewModel by lazy { SignUpViewModel() }
+    private lateinit var signUpViewModel: SignUpViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        signUpViewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
 
         setupSignUpButtonListener()
         observeSignUpResult()

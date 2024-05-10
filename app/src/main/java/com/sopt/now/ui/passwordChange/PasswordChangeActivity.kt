@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
 import com.sopt.now.data.remote.request.ChangePasswordRequest
@@ -13,11 +14,12 @@ import com.sopt.now.ui.passwordChange.PasswordChangeViewModel.Companion.SUCCESS_
 
 class PasswordChangeActivity :
     BindingActivity<ActivityPasswordChangeBinding>(R.layout.activity_password_change) {
-    private val passwordChangeViewModel: PasswordChangeViewModel by lazy { PasswordChangeViewModel() }
+    private lateinit var passwordChangeViewModel: PasswordChangeViewModel
     private var userId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        passwordChangeViewModel = ViewModelProvider(this)[PasswordChangeViewModel::class.java]
 
         getUserId()
         setupSignInButtonListener()

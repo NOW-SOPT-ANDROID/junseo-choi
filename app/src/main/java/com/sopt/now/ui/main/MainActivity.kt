@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivityMainBinding
 import com.sopt.now.ui.common.base.BindingActivity
@@ -12,11 +13,13 @@ import com.sopt.now.ui.main.myPage.MyPageFragment
 import com.sopt.now.ui.main.search.SearchFragment
 
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
-    private val mainViewModel: MainViewModel by lazy { MainViewModel() }
+    private lateinit var mainViewModel: MainViewModel
     private var userId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
         getUserId()
         initDefaultFragment(savedInstanceState)
 

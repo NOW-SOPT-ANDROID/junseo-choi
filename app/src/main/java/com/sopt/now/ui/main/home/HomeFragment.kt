@@ -2,6 +2,7 @@ package com.sopt.now.ui.main.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.sopt.now.R
 import com.sopt.now.data.remote.response.GetFriendsResponse
 import com.sopt.now.data.remote.response.GetUserResponse
@@ -10,7 +11,7 @@ import com.sopt.now.ui.common.base.BindingFragment
 import com.sopt.now.ui.main.MainViewModel
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
-    private val mainViewModel: MainViewModel by lazy { MainViewModel() }
+    private lateinit var mainViewModel: MainViewModel
     private val adapter: HomeAdapter by lazy { HomeAdapter() }
 
     override fun onViewCreated(
@@ -18,6 +19,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
         setupDataBinding()
         setupAdapter()
