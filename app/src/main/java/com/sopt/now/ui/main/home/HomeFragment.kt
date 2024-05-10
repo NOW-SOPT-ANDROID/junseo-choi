@@ -7,6 +7,7 @@ import com.sopt.now.R
 import com.sopt.now.data.remote.response.GetFriendsResponse
 import com.sopt.now.data.remote.response.GetUserResponse
 import com.sopt.now.databinding.FragmentHomeBinding
+import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.common.base.BindingFragment
 import com.sopt.now.ui.main.MainViewModel
 
@@ -19,14 +20,19 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
+        setupViewModel()
         setupDataBinding()
         setupAdapter()
         getUserInfo()
         getFriendsInfo()
         observeUserInfo()
         observeFriendsInfo()
+    }
+
+    private fun setupViewModel() {
+        val mainFactory = BaseFactory { MainViewModel() }
+        mainViewModel = ViewModelProvider(this, mainFactory)[MainViewModel::class.java]
     }
 
     private fun setupDataBinding() {

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivityMainBinding
+import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.common.base.BindingActivity
 import com.sopt.now.ui.main.home.HomeFragment
 import com.sopt.now.ui.main.myPage.MyPageFragment
@@ -18,13 +19,17 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
+        setupViewModel()
         getUserId()
         initDefaultFragment(savedInstanceState)
-
         setupDataBinding()
         setupBottomNavigation()
+    }
+
+    private fun setupViewModel() {
+        val mainFactory = BaseFactory { MainViewModel() }
+        mainViewModel = ViewModelProvider(this, mainFactory)[MainViewModel::class.java]
     }
 
     private fun getUserId() {

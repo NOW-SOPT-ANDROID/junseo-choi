@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
 import com.sopt.now.data.remote.request.SignInRequest
 import com.sopt.now.databinding.ActivitySignInBinding
+import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.common.base.BindingActivity
 import com.sopt.now.ui.main.MainActivity
 import com.sopt.now.ui.signUp.SignUpActivity
@@ -18,11 +19,16 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        signInViewModel = ViewModelProvider(this)[SignInViewModel::class.java]
 
+        setupViewModel()
         setupSignInButtonListener()
         observeSignInResult()
         setupNavigateToSignUpListener()
+    }
+
+    private fun setupViewModel() {
+        val signInFactory = BaseFactory { SignInViewModel() }
+        signInViewModel = ViewModelProvider(this, signInFactory)[SignInViewModel::class.java]
     }
 
     private fun setupSignInButtonListener() {

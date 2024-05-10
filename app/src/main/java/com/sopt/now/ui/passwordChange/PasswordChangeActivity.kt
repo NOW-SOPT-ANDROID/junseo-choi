@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
 import com.sopt.now.data.remote.request.ChangePasswordRequest
 import com.sopt.now.databinding.ActivityPasswordChangeBinding
+import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.common.base.BindingActivity
 import com.sopt.now.ui.passwordChange.PasswordChangeViewModel.Companion.SUCCESS_PASSWORD_CHANGE
 
@@ -19,11 +20,17 @@ class PasswordChangeActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        passwordChangeViewModel = ViewModelProvider(this)[PasswordChangeViewModel::class.java]
 
+        setupViewModel()
         getUserId()
         setupSignInButtonListener()
         observeSignInResult()
+    }
+
+    private fun setupViewModel() {
+        val passwordChangeFactory = BaseFactory { PasswordChangeViewModel() }
+        passwordChangeViewModel =
+            ViewModelProvider(this, passwordChangeFactory)[PasswordChangeViewModel::class.java]
     }
 
     private fun getUserId() {

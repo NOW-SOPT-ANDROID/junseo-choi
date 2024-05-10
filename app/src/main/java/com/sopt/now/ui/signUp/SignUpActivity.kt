@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
 import com.sopt.now.data.remote.request.SignUpRequest
 import com.sopt.now.databinding.ActivitySignUpBinding
+import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.common.base.BindingActivity
 import com.sopt.now.ui.signUp.SignUpViewModel.Companion.SUCCESS_SIGN_UP
 
@@ -17,10 +18,15 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        signUpViewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
 
+        setupViewModel()
         setupSignUpButtonListener()
         observeSignUpResult()
+    }
+
+    private fun setupViewModel() {
+        val signUpFactory = BaseFactory { SignUpViewModel() }
+        signUpViewModel = ViewModelProvider(this, signUpFactory)[SignUpViewModel::class.java]
     }
 
     private fun setupSignUpButtonListener() {
