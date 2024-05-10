@@ -2,16 +2,20 @@ package com.sopt.now.compose.feature.signIn
 
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -53,20 +57,18 @@ fun SignInScreen(navController: NavController) {
 
     val signInMessage = signInViewModel.signInMessage.observeAsState()
 
-    LaunchedEffect(signInMessage.value) {
-        signInMessage.value?.let {
-            if (it.split("/")[0] == SignInViewModel.SUCCESS_SIGN_IN) {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.sign_in_success),
-                    Toast.LENGTH_SHORT,
-                ).show()
-                val userId = it.split("/")[1].toInt()
-                mainViewModel.getUserInfo(userId)
-                navController.navigate(Screen.Home.route)
-            } else {
-                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-            }
+    signInMessage.value?.let {
+        if (it.split("/")[0] == SignInViewModel.SUCCESS_SIGN_IN) {
+            Toast.makeText(
+                context,
+                context.getString(R.string.sign_in_success),
+                Toast.LENGTH_SHORT,
+            ).show()
+            val userId = it.split("/")[1].toInt()
+            mainViewModel.getUserInfo(userId)
+            navController.navigate(Screen.Home.route)
+        } else {
+            ShowAnimationMessage(message = it)
         }
     }
 
@@ -114,6 +116,32 @@ fun SignInScreen(navController: NavController) {
                     .padding(top = 8.dp),
         ) {
             Text(context.getString(R.string.sign_up_button))
+        }
+    }
+}
+
+@Composable
+fun ShowAnimationMessage(message: String) {
+    AnimatedVisibility(
+        visible = true,
+        enter =
+            slideInVertically(
+                initialOffsetY = { fullHeight -> -fullHeight },
+            ),
+        exit =
+            slideOutVertically(
+                targetOffsetY = { fullHeight -> -fullHeight },
+            ),
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.secondary,
+            shadowElevation = 4.dp,
+        ) {
+            Text(
+                text = message,
+                modifier = Modifier.padding(16.dp),
+            )
         }
     }
 }
