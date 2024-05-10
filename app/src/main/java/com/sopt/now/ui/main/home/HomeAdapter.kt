@@ -12,7 +12,7 @@ import com.sopt.now.databinding.ItemHomeMineBinding
 
 class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(HomeDiffCallback()) {
     private var myProfile: GetUserResponse.User = GetUserResponse.User.defaultUser
-    private var friendList: List<GetFriendsResponse.Data> = emptyList()
+    private var friends: List<GetFriendsResponse.Data> = emptyList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -31,9 +31,10 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
+        val item = getItem(position)
         when (holder) {
-            is MineViewHolder -> holder.bind(myProfile)
-            is FriendViewHolder -> holder.bind(friendList[position - MINE_PROFILE_COUNT])
+            is MineViewHolder -> if (item is HomeItem.Mine) holder.bind(item.userInfo)
+            is FriendViewHolder -> if (item is HomeItem.FriendItem) holder.bind(item.friend)
         }
     }
 
@@ -46,7 +47,7 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
     }
 
     override fun getItemCount(): Int {
-        return friendList.size + if (myProfile != GetUserResponse.User.defaultUser) MINE_PROFILE_COUNT else 0
+        return friends.size + if (myProfile != GetUserResponse.User.defaultUser) MINE_PROFILE_COUNT else 0
     }
 
     fun submitList(
@@ -54,7 +55,7 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
         friendList: List<GetFriendsResponse.Data>,
     ) {
         this.myProfile = myProfile
-        this.friendList = friendList
+        this.friends = friendList
         submitList(listOf(HomeItem.Mine(myProfile)) + friendList.map { HomeItem.FriendItem(it) })
     }
 
