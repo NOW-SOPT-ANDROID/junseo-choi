@@ -42,7 +42,7 @@ object NetworkModule {
             .build()
     }
 
-    inline fun <reified T> create(url: String): T = provideRetrofit(url).create<T>(T::class.java)
+    inline fun <reified T> create(url: String): T = provideRetrofit(url).create(T::class.java)
 }
 
 object ServicePool {
