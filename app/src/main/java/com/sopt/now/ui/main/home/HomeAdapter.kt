@@ -11,7 +11,7 @@ import com.sopt.now.databinding.ItemHomeFriendBinding
 import com.sopt.now.databinding.ItemHomeMineBinding
 
 class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(HomeDiffCallback()) {
-    private var myProfile: GetUserResponse.User = GetUserResponse.defaultUser
+    private var myProfile: GetUserResponse.User = GetUserResponse.User.defaultUser
     private var friendList: List<GetFriendsResponse.Data> = emptyList()
 
     override fun onCreateViewHolder(
@@ -46,7 +46,7 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
     }
 
     override fun getItemCount(): Int {
-        return friendList.size + if (myProfile != GetUserResponse.defaultUser) MINE_PROFILE_COUNT else 0
+        return friendList.size + if (myProfile != GetUserResponse.User.defaultUser) MINE_PROFILE_COUNT else 0
     }
 
     fun submitList(

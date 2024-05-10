@@ -46,7 +46,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     private fun observeUserInfo() {
         mainViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
-            if (userInfo != GetUserResponse.defaultUser) {
+            if (userInfo != GetUserResponse.User.defaultUser) {
                 updateRecyclerView(
                     userInfo,
                     mainViewModel.friendsInfo.value ?: emptyList(),
@@ -59,7 +59,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         mainViewModel.friendsInfo.observe(viewLifecycleOwner) { friendList ->
             if (friendList.isNotEmpty()) {
                 updateRecyclerView(
-                    mainViewModel.userInfo.value ?: GetUserResponse.defaultUser,
+                    mainViewModel.userInfo.value ?: GetUserResponse.User.defaultUser,
                     friendList,
                 )
             }

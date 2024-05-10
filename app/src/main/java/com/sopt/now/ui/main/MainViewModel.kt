@@ -19,7 +19,7 @@ class MainViewModel : ViewModel() {
 
     fun getUserInfo(userId: Int) {
         if (userId == 0) {
-            _userInfo.value = GetUserResponse.defaultUser
+            _userInfo.value = GetUserResponse.User.defaultUser
             return
         }
 
@@ -27,7 +27,7 @@ class MainViewModel : ViewModel() {
             runCatching {
                 ServicePool.userService.getUserInfo(userId)
             }.onSuccess {
-                _userInfo.value = it.body()?.data ?: GetUserResponse.defaultUser
+                _userInfo.value = it.body()?.data ?: GetUserResponse.User.defaultUser
             }.onFailure {
                 Log.e("MainViewModel", "getUserInfo: $it")
             }
