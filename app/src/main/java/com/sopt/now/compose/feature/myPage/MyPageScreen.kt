@@ -25,7 +25,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sopt.now.compose.R
-import com.sopt.now.compose.data.remote.response.GetUserResponse
+import com.sopt.now.compose.data.remote.response.UserResponse
 import com.sopt.now.compose.feature.common.base.BaseFactory
 import com.sopt.now.compose.feature.home.BottomNav
 import com.sopt.now.compose.feature.main.MainViewModel
@@ -35,7 +35,7 @@ import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 fun MyPageScreen(navController: NavController) {
     val context = LocalContext.current
     val mainViewModel = provideMainViewModel(context)
-    val userInfo = mainViewModel.userInfo.observeAsState(GetUserResponse.defaultUser).value
+    val userInfo = mainViewModel.userInfo.observeAsState(UserResponse.defaultUser).value
 
     Scaffold(bottomBar = { BottomNav(navController = navController) }) { paddingValues ->
         UserInfoDisplay(modifier = Modifier.padding(paddingValues), userInfo = userInfo)
@@ -45,7 +45,7 @@ fun MyPageScreen(navController: NavController) {
 @Composable
 fun UserInfoDisplay(
     modifier: Modifier = Modifier,
-    userInfo: GetUserResponse.User,
+    userInfo: UserResponse.User,
 ) {
     Box(modifier = modifier) {
         Column(modifier = Modifier.padding(24.dp)) {

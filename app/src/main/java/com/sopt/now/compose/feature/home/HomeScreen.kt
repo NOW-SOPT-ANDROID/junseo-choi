@@ -27,8 +27,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.sopt.now.compose.data.remote.response.GetFriendsResponse
-import com.sopt.now.compose.data.remote.response.GetUserResponse
+import com.sopt.now.compose.data.remote.response.FriendsResponse
+import com.sopt.now.compose.data.remote.response.UserResponse
 import com.sopt.now.compose.feature.common.base.BaseFactory
 import com.sopt.now.compose.feature.main.MainViewModel
 
@@ -42,7 +42,7 @@ fun HomeScreen(navController: NavController) {
             BaseFactory { MainViewModel() },
         )[MainViewModel::class.java]
 
-    val userInfo = mainViewModel.userInfo.observeAsState(GetUserResponse.defaultUser).value
+    val userInfo = mainViewModel.userInfo.observeAsState(UserResponse.defaultUser).value
     val friends = mainViewModel.friendsInfo.observeAsState(emptyList()).value
 
     mainViewModel.getFriendsInfo()
@@ -58,7 +58,7 @@ fun HomeScreen(navController: NavController) {
 }
 
 @Composable
-fun UserProfileItem(userInfo: GetUserResponse.User) {
+fun UserProfileItem(userInfo: UserResponse.User) {
     Row(
         modifier =
             Modifier
@@ -76,7 +76,7 @@ fun UserProfileItem(userInfo: GetUserResponse.User) {
 }
 
 @Composable
-fun FriendItem(friend: GetFriendsResponse.Data) {
+fun FriendItem(friend: FriendsResponse.Data) {
     Row(
         modifier =
             Modifier

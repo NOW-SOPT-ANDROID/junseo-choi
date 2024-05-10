@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GetFriendsResponse(
+data class FriendsResponse(
     @SerialName("page")
     val page: Int,
     @SerialName("per_page")

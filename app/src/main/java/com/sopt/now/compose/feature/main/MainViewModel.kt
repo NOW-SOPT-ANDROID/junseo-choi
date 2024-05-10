@@ -6,16 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.data.ServicePool
-import com.sopt.now.compose.data.remote.response.GetFriendsResponse
-import com.sopt.now.compose.data.remote.response.GetUserResponse
+import com.sopt.now.compose.data.remote.response.FriendsResponse
+import com.sopt.now.compose.data.remote.response.UserResponse
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
-    private val _userInfo = MutableLiveData<GetUserResponse.User>()
-    val userInfo: LiveData<GetUserResponse.User> = _userInfo
+    private val _userInfo = MutableLiveData<UserResponse.User>()
+    val userInfo: LiveData<UserResponse.User> = _userInfo
 
-    private val _friendsInfo = MutableLiveData<List<GetFriendsResponse.Data>>()
-    val friendsInfo: LiveData<List<GetFriendsResponse.Data>> = _friendsInfo
+    private val _friendsInfo = MutableLiveData<List<FriendsResponse.Data>>()
+    val friendsInfo: LiveData<List<FriendsResponse.Data>> = _friendsInfo
 
     private val _userId = MutableLiveData<Int>()
     val userId: LiveData<Int> = _userId
@@ -24,7 +24,7 @@ class MainViewModel : ViewModel() {
         _userId.value = userId
 
         if (userId == 0) {
-            _userInfo.value = GetUserResponse.defaultUser
+            _userInfo.value = UserResponse.defaultUser
             return
         }
 
@@ -32,7 +32,7 @@ class MainViewModel : ViewModel() {
             runCatching {
                 ServicePool.userService.getUserInfo(userId)
             }.onSuccess {
-                _userInfo.value = it.body()?.data ?: GetUserResponse.defaultUser
+                _userInfo.value = it.body()?.data ?: UserResponse.defaultUser
             }.onFailure {
                 Log.e("MainViewModel", "getUserInfo: $it")
             }

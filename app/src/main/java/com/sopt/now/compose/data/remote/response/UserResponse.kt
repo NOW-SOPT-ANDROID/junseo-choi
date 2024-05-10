@@ -3,7 +3,7 @@ package com.sopt.now.compose.data.remote.response
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GetUserResponse(
+data class UserResponse(
     val code: Int,
     val message: String,
     val data: User? = defaultUser,
