@@ -23,6 +23,7 @@
 
     <!--    SignInActivity    -->
     <string name="success_sign_in">로그인에 성공하셨습니다!</string>
+    <string name="finish_week_sixth_homework">6주차 과제 완료!</string>
 
     <!--    SignUpActivity    -->
     <string name="success_sign_up">%s번째 회원님 환영합니다!</string>

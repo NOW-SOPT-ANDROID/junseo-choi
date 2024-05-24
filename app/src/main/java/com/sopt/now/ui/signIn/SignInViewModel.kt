@@ -13,6 +13,9 @@ class SignInViewModel : ViewModel() {
     private val _signInMessage = MutableLiveData<String>()
     val signInMessage: LiveData<String> = _signInMessage
 
+    private val _isWeekSixthHomeworkFinished = MutableLiveData<Boolean>(false)
+    val isWeekSixthHomeworkFinished: LiveData<Boolean> = _isWeekSixthHomeworkFinished
+
     fun performSignIn(request: SignInRequest) {
         viewModelScope.launch {
             runCatching {
@@ -30,6 +33,10 @@ class SignInViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+    fun finishHomework() {
+        _isWeekSixthHomeworkFinished.value = true
     }
 
     companion object {
