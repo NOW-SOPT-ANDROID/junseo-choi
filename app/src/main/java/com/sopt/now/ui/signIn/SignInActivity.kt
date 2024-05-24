@@ -23,6 +23,7 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
         setupViewModel()
         setupSignInButtonListener()
         observeSignInResult()
+        observeWeekSixthHomework()
         setupNavigateToSignUpListener()
     }
 
@@ -34,6 +35,7 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
     private fun setupSignInButtonListener() {
         binding.viewSignInButton.setOnClickListener {
             performSignIn()
+            finishHomework()
         }
     }
 
@@ -42,6 +44,10 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
         val inputPassword: String = binding.etSignInPassword.text.toString()
 
         signInViewModel.performSignIn(SignInRequest(inputUsername, inputPassword))
+    }
+
+    private fun finishHomework() {
+        signInViewModel.finishHomework()
     }
 
     private fun observeSignInResult() {
@@ -64,6 +70,18 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
         val intent = MainActivity.newIntent(this, userId)
         startActivity(intent)
         finish()
+    }
+
+    private fun observeWeekSixthHomework() {
+        signInViewModel.isWeekSixthHomeworkFinished.observe(this) { isWeekSixthHomeworkFinished ->
+            if (isWeekSixthHomeworkFinished) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.finish_week_sixth_homework),
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
+        }
     }
 
     private fun setupNavigateToSignUpListener() {
