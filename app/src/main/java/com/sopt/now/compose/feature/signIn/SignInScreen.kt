@@ -72,6 +72,17 @@ fun SignInScreen(navController: NavController) {
         }
     }
 
+    val isWeekSixthHomeworkFinished = signInViewModel.isWeekSixthHomeworkFinished.observeAsState()
+    isWeekSixthHomeworkFinished.value?.let {
+        if (it) {
+            Toast.makeText(
+                context,
+                context.getString(R.string.finish_week_sixth_homework),
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
+    }
+
     Column(modifier = Modifier.padding(24.dp)) {
         Text(text = stringResource(id = R.string.sign_in_title))
         OutlinedTextField(
@@ -98,6 +109,7 @@ fun SignInScreen(navController: NavController) {
         Button(
             onClick = {
                 signInViewModel.performSignIn(SignInRequest(username, password))
+                signInViewModel.finishWeekSixthHomework()
             },
             modifier =
                 Modifier
