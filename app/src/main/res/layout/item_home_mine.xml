@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.sopt.now.data.model.UserInfoEntity" />
+            type="com.sopt.now.data.remote.response.GetUserResponse.User" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,13 +41,13 @@
             tools:text="심사숙고" />
 
         <TextView
-            android:id="@+id/tvHomeFriendSelfDescription"
+            android:id="@+id/tvHomeFriendEmail"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="@string/temp_profile_self_description"
+            android:text="@{item.phone}"
             android:textAlignment="center"
             android:textAppearance="@style/body2"
             android:textColor="@color/gray"
@@ -62,7 +62,7 @@
             android:background="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvHomeFriendSelfDescription" />
+            app:layout_constraintTop_toBottomOf="@id/tvHomeFriendEmail" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

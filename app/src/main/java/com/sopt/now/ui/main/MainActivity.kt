@@ -5,46 +5,48 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.sopt.now.NowSopt
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivityMainBinding
 import com.sopt.now.ui.common.base.BaseFactory
+import com.sopt.now.ui.common.base.BindingActivity
 import com.sopt.now.ui.main.home.HomeFragment
 import com.sopt.now.ui.main.myPage.MyPageFragment
 import com.sopt.now.ui.main.search.SearchFragment
-import com.teamwss.websoso.ui.common.base.BindingActivity
 
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var username: String
+    private var userId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getUsername()
-
-        initDefaultFragment(savedInstanceState)
 
         setupViewModel()
+        getUserId()
+        initDefaultFragment(savedInstanceState)
         setupDataBinding()
         setupBottomNavigation()
     }
 
+    private fun setupViewModel() {
+        val mainFactory = BaseFactory { MainViewModel() }
+        mainViewModel = ViewModelProvider(this, mainFactory)[MainViewModel::class.java]
+    }
+
+    private fun getUserId() {
+        userId = intent.getIntExtra(USER_ID, 0)
+    }
+
     private fun initDefaultFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            changeFragment(HomeFragment.newInstance(username))
+            changeFragment(HomeFragment.newInstance(userId))
         }
-        binding.bnvMain.selectedItemId = R.id.menu_main_home
+        binding.bnvMain.selectedItemId = BottomNavItems.HOME.id
     }
 
     private fun changeFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fcvMain, fragment)
             .commit()
-    }
-
-    private fun setupViewModel() {
-        val factory = BaseFactory { MainViewModel(NowSopt.getUserRepository()) }
-        mainViewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
     }
 
     private fun setupDataBinding() {
@@ -61,28 +63,23 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun createFragmentByMenuId(menuId: Int): Fragment {
-        val username = intent.getStringExtra(USER_NAME).orEmpty()
         return when (menuId) {
             BottomNavItems.SEARCH.id -> SearchFragment.newInstance()
-            BottomNavItems.HOME.id -> HomeFragment.newInstance(username)
-            BottomNavItems.MY_PAGE.id -> MyPageFragment.newInstance(username)
+            BottomNavItems.HOME.id -> HomeFragment.newInstance(userId)
+            BottomNavItems.MY_PAGE.id -> MyPageFragment.newInstance(userId)
             else -> throw IllegalArgumentException()
         }
     }
 
-    private fun getUsername() {
-        username = intent.getStringExtra(USER_NAME).orEmpty()
-    }
-
     companion object {
-        private const val USER_NAME = "USER_NAME"
+        private const val USER_ID = "USER_ID"
 
         fun newIntent(
             context: Context,
-            username: String,
+            userId: Int,
         ): Intent {
             return Intent(context, MainActivity::class.java).apply {
-                putExtra(USER_NAME, username)
+                putExtra(USER_ID, userId)
             }
         }
     }

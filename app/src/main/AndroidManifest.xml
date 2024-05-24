@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NOWSOPTAndroid"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".ui.signIn.SignInActivity"
@@ -31,6 +32,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.signUp.SignUpActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.passwordChange.PasswordChangeActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
     </application>

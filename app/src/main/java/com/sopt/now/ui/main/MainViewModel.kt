@@ -5,24 +5,48 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.data.model.UserInfoEntity
-import com.sopt.now.data.repository.UserRepository
-import kotlinx.coroutines.Dispatchers
+import com.sopt.now.data.ServicePool
+import com.sopt.now.data.remote.response.GetFriendsResponse
+import com.sopt.now.data.remote.response.GetUserResponse
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
-    private val _userInfo = MutableLiveData<UserInfoEntity>(UserInfoEntity.defaultUserInfo)
-    val userInfo: LiveData<UserInfoEntity> = _userInfo
+class MainViewModel : ViewModel() {
+    private val _userInfo = MutableLiveData<GetUserResponse.User>()
+    val userInfo: LiveData<GetUserResponse.User> = _userInfo
 
-    fun getUserInfo(username: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+    private val _friendsInfo = MutableLiveData<List<GetFriendsResponse.Data>>()
+    val friendsInfo: LiveData<List<GetFriendsResponse.Data>> = _friendsInfo
+
+    fun getUserInfo(userId: Int) {
+        if (userId == 0) {
+            _userInfo.value = GetUserResponse.User.defaultUser
+            return
+        }
+
+        viewModelScope.launch {
             runCatching {
-                userRepository.getUserInfo(username)
-            }.onSuccess { userInfo ->
-                _userInfo.postValue(userInfo)
+                ServicePool.userService.getUserInfo(userId)
+            }.onSuccess {
+                _userInfo.value = it.body()?.data ?: GetUserResponse.User.defaultUser
             }.onFailure {
-                Log.e("MainViewModel", "Failed to get user info", it)
+                Log.e("MainViewModel", "getUserInfo: $it")
             }
         }
+    }
+
+    fun getFriendsInfo() {
+        viewModelScope.launch {
+            runCatching {
+                ServicePool.friendService.getFriends(DEFAULT_FRIEND_PAGE)
+            }.onSuccess {
+                _friendsInfo.value = it.body()?.data ?: emptyList()
+            }.onFailure {
+                Log.e("MainViewModel", "getUserInfo: $it")
+            }
+        }
+    }
+
+    companion object {
+        private const val DEFAULT_FRIEND_PAGE = 1
     }
 }

@@ -3,9 +3,8 @@
 
     <!--    activity_main   -->
     <string name="tv_main_title">NOW SOPT HOMEWORK</string>
-    <string name="tv_main_username_title">USERNAME</string>
-    <string name="tv_main_password_title">PASSWORD</string>
-    <string name="tv_main_drink_capacity_title">DRINK CAPACITY</string>
+    <string name="tv_main_username_title">ID</string>
+    <string name="tv_main_drink_capacity_title">HP</string>
 
     <!--    activity_sign_in    -->
     <string name="tv_sign_in_title">Welcome to SOPT 👊</string>
@@ -19,27 +18,14 @@
     <string name="tl_sign_up_username">Username</string>
     <string name="tl_sign_up_password">Password</string>
     <string name="tl_sign_up_nickname">Nickname</string>
-    <string name="tv_sign_up_drink_capacity">Drink Capacity</string>
+    <string name="tv_sign_up_phone_number">PhoneNumber</string>
     <string name="tv_sign_up_button">Submit</string>
 
     <!--    SignInActivity    -->
-    <string name="error_sign_in_username_blank">아이디를 입력해주세요.</string>
-    <string name="error_sign_in_password_blank">비밀번호를 입력해주세요.</string>
-    <string name="error_sign_in_username_wrong">존재하지 않는 아이디입니다.</string>
-    <string name="error_sign_in_password_wrong">비밀번호가 일치하지 않습니다.</string>
-    <string name="error_sign_in_failure">로그인에 실패하였습니다.</string>
     <string name="success_sign_in">로그인에 성공하셨습니다!</string>
 
     <!--    SignUpActivity    -->
-    <string name="error_sign_up_username">아이디는 6자 이상 10자 이하여야 합니다.</string>
-    <string name="error_sign_up_password">비밀번호는 8자 이상 12자 이하여야 합니다.</string>
-    <string name="error_sign_up_username_blank">아이디를 입력해주세요.</string>
-    <string name="error_sign_up_password_blank">비밀번호를 입력해주세요.</string>
-    <string name="error_sign_up_nickname_blank">닉네임을 입력해주세요.</string>
-    <string name="error_sign_up_username_taken">이미 사용 중인 아이디입니다.</string>
-    <string name="error_sign_up_nickname_taken">이미 사용 중인 닉네임입니다.</string>
-    <string name="error_sign_up_failure">회원가입 오류입니다.</string>
-    <string name="success_sign_up">회원가입에 성공하셨습니다!</string>
+    <string name="success_sign_up">%s번째 회원님 환영합니다!</string>
     <string name="main_bnv_home">홈</string>
     <string name="main_bnv_search">검색</string>
     <string name="main_bnv_my_page">마이페이지</string>
@@ -47,6 +33,14 @@
     <!--    Temp    -->
     <string name="temp_profile_image_url">https://avatars.githubusercontent.com/u/127238018?v=4</string>
     <string name="temp_profile_background_image_url">https://pbs.twimg.com/media/GJsSN8hagAMUyak?format=jpg&amp;name=large</string>
-    <string name="temp_profile_self_description">안녕하세요 저는 감자인데요, 아무말이나 이것저것 써볼까 합니다</string>
+
+    <!--   activity_password_change    -->
+    <string name="tv_password_change_title">🔒Password Change</string>
+    <string name="tl_password_change_current">Current Password</string>
+    <string name="tl_password_change_to_change">Password To Change</string>
+    <string name="tl_password_change_confirm">Password Confirm</string>
+
+    <!--   fragment_my_page    -->
+    <string name="tv_my_page_password_change">비밀번호 변경</string>
 
 </resources>

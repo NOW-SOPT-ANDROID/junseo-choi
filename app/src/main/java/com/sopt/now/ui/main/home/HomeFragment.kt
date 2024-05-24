@@ -3,14 +3,13 @@ package com.sopt.now.ui.main.home
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import com.sopt.now.NowSopt
 import com.sopt.now.R
-import com.sopt.now.data.model.Friend
-import com.sopt.now.data.model.UserInfoEntity
+import com.sopt.now.data.remote.response.GetFriendsResponse
+import com.sopt.now.data.remote.response.GetUserResponse
 import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.ui.common.base.BaseFactory
+import com.sopt.now.ui.common.base.BindingFragment
 import com.sopt.now.ui.main.MainViewModel
-import com.teamwss.websoso.ui.common.base.BindingFragment
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private lateinit var mainViewModel: MainViewModel
@@ -26,11 +25,13 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         setupDataBinding()
         setupAdapter()
         getUserInfo()
+        getFriendsInfo()
         observeUserInfo()
+        observeFriendsInfo()
     }
 
     private fun setupViewModel() {
-        val mainFactory = BaseFactory { MainViewModel(NowSopt.getUserRepository()) }
+        val mainFactory = BaseFactory { MainViewModel() }
         mainViewModel = ViewModelProvider(this, mainFactory)[MainViewModel::class.java]
     }
 
@@ -44,30 +45,50 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun getUserInfo() {
-        mainViewModel.getUserInfo(arguments?.getString(USER_NAME).orEmpty())
+        mainViewModel.getUserInfo(arguments?.getInt(USER_ID) ?: 0)
+    }
+
+    private fun getFriendsInfo() {
+        mainViewModel.getFriendsInfo()
     }
 
     private fun observeUserInfo() {
         mainViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
-            updateRecyclerView(userInfo, Friend.dummyData.sortedBy { it.name })
+            if (userInfo != GetUserResponse.User.defaultUser) {
+                updateRecyclerView(
+                    userInfo,
+                    mainViewModel.friendsInfo.value ?: emptyList(),
+                )
+            }
+        }
+    }
+
+    private fun observeFriendsInfo() {
+        mainViewModel.friendsInfo.observe(viewLifecycleOwner) { friendList ->
+            if (friendList.isNotEmpty()) {
+                updateRecyclerView(
+                    mainViewModel.userInfo.value ?: GetUserResponse.User.defaultUser,
+                    friendList,
+                )
+            }
         }
     }
 
     private fun updateRecyclerView(
-        userInfo: UserInfoEntity,
-        friendList: List<Friend>,
+        userInfo: GetUserResponse.User,
+        friendList: List<GetFriendsResponse.Data>,
     ) {
         adapter.submitList(userInfo, friendList)
     }
 
     companion object {
-        private const val USER_NAME = "USER_NAME"
+        private const val USER_ID = "USER_ID"
 
-        fun newInstance(username: String): HomeFragment {
+        fun newInstance(userId: Int): HomeFragment {
             return HomeFragment().apply {
                 arguments =
                     Bundle().apply {
-                        putString(USER_NAME, username)
+                        putInt(USER_ID, userId)
                     }
             }
         }

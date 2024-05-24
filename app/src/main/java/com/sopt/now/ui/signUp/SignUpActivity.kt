@@ -6,11 +6,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
-import com.sopt.now.NowSopt
 import com.sopt.now.R
+import com.sopt.now.data.remote.request.SignUpRequest
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.ui.common.base.BaseFactory
-import com.teamwss.websoso.ui.common.base.BindingActivity
+import com.sopt.now.ui.common.base.BindingActivity
+import com.sopt.now.ui.signUp.SignUpViewModel.Companion.SUCCESS_SIGN_UP
 
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
     private lateinit var signUpViewModel: SignUpViewModel
@@ -20,71 +21,42 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
 
         setupViewModel()
         setupSignUpButtonListener()
-
         observeSignUpResult()
     }
 
     private fun setupViewModel() {
-        val factory = BaseFactory { SignUpViewModel(NowSopt.getUserRepository()) }
-        signUpViewModel = ViewModelProvider(this, factory)[SignUpViewModel::class.java]
+        val signUpFactory = BaseFactory { SignUpViewModel() }
+        signUpViewModel = ViewModelProvider(this, signUpFactory)[SignUpViewModel::class.java]
     }
 
     private fun setupSignUpButtonListener() {
         binding.viewSignUpButton.setOnClickListener {
-            val username = binding.etSignUpUsername.text.toString()
-            val password = binding.etSignUpPassword.text.toString()
-            val nickname = binding.etSignUpNickname.text.toString()
-            val drinkCapacity = binding.sliderSignUpDrinkCapacity.value
-
-            signUpViewModel.checkIsInputValidAndSignUp(username, password, nickname, drinkCapacity)
+            performSignUp()
         }
     }
 
+    private fun performSignUp() {
+        val request =
+            SignUpRequest(
+                authenticationId = binding.etSignUpUsername.text.toString(),
+                password = binding.etSignUpPassword.text.toString(),
+                nickname = binding.etSignUpNickname.text.toString(),
+                phone = binding.etSignUpPhoneNumber.text.toString(),
+            )
+        signUpViewModel.performSignUp(request)
+    }
+
     private fun observeSignUpResult() {
-        signUpViewModel.uiState.observe(this) { state ->
-            when (state) {
-                SignUpUiState.UsernameBlank -> {
-                    binding.etSignUpUsername.error = getString(R.string.error_sign_up_username_blank)
-                }
-
-                SignUpUiState.PasswordBlank -> {
-                    binding.etSignUpPassword.error = getString(R.string.error_sign_up_password_blank)
-                }
-
-                SignUpUiState.NicknameBlank -> {
-                    binding.etSignUpNickname.error = getString(R.string.error_sign_up_nickname_blank)
-                }
-                SignUpUiState.UsernameError -> {
-                    binding.etSignUpUsername.error = getString(R.string.error_sign_up_username)
-                }
-
-                SignUpUiState.PasswordError -> {
-                    binding.etSignUpPassword.error = getString(R.string.error_sign_up_password)
-                }
-
-                SignUpUiState.UsernameTaken -> {
-                    binding.etSignUpUsername.error = getString(R.string.error_sign_up_username_taken)
-                }
-
-                SignUpUiState.NicknameTaken -> {
-                    binding.etSignUpNickname.error = getString(R.string.error_sign_up_nickname_taken)
-                }
-
-                SignUpUiState.Success -> {
-                    Toast.makeText(this, getString(R.string.success_sign_up), Toast.LENGTH_SHORT)
-                        .show()
-                    finish()
-                }
-
-                SignUpUiState.Failure -> {
-                    Snackbar.make(
-                        binding.root,
-                        getString(R.string.error_sign_up_failure),
-                        Snackbar.LENGTH_SHORT,
-                    ).show()
-                }
-
-                else -> {}
+        signUpViewModel.signUpMessage.observe(this) { message ->
+            if (message.split("/")[0] == SUCCESS_SIGN_UP) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.success_sign_up, message.split("/")[1]),
+                    Toast.LENGTH_SHORT,
+                ).show()
+                finish()
+            } else {
+                Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
             }
         }
     }

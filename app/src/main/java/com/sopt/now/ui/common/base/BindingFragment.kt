@@ -1,4 +1,4 @@
-package com.teamwss.websoso.ui.common.base
+package com.sopt.now.ui.common.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
