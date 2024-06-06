@@ -3,7 +3,9 @@ package com.sopt.now
 import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class NowSopt : Application() {
     override fun onCreate() {
         super.onCreate()
