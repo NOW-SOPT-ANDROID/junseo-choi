@@ -14,6 +14,7 @@
     <string name="sign_in_title">로그인</string>
     <string name="sign_in_button">로그인</string>
     <string name="sign_in_success">로그인에 성공하셨습니다!</string>
+    <string name="finish_week_sixth_homework">6주차 과제 완료!</string>
 
     <!--  BottomNav  -->
     <string name="main_home">홈</string>

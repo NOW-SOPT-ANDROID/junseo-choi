@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 Properties properties = new Properties()
@@ -97,4 +99,13 @@ dependencies {
 
     // livedata
     implementation 'androidx.compose.runtime:runtime-livedata:1.6.7'
+
+    // Hilt
+    implementation 'com.google.dagger:hilt-android:2.48'
+    implementation 'androidx.hilt:hilt-navigation-compose:1.2.0'
+    kapt 'com.google.dagger:hilt-compiler:2.48'
+
+    // fragment-ktx
+    implementation 'androidx.fragment:fragment-ktx:1.6.1'
+
 }

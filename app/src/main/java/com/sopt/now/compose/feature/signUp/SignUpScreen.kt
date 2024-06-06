@@ -1,7 +1,6 @@
 package com.sopt.now.compose.feature.signUp
 
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,28 +23,24 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModelProvider
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sopt.now.compose.R
 import com.sopt.now.compose.data.remote.request.SignUpRequest
-import com.sopt.now.compose.feature.common.base.BaseFactory
 import com.sopt.now.compose.model.Screen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 
 @Composable
-fun SignUpScreen(navController: NavController) {
+fun SignUpScreen(
+    navController: NavController,
+    signUpViewModel: SignUpViewModel = hiltViewModel(),
+) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var nickname by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
 
     val context = LocalContext.current
-
-    val signUpViewModel =
-        ViewModelProvider(
-            context as ComponentActivity,
-            BaseFactory { SignUpViewModel() },
-        )[SignUpViewModel::class.java]
 
     val signUpMessage = signUpViewModel.signUpMessage.observeAsState()
 
