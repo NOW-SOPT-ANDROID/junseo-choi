@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.sopt.now.R
-import com.sopt.now.data.remote.response.GetFriendsResponse
-import com.sopt.now.data.remote.response.GetUserResponse
+import com.sopt.now.data.remote.response.FriendsResponse
+import com.sopt.now.data.remote.response.UserResponse
 import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.ui.common.base.BindingFragment
 import com.sopt.now.ui.main.MainViewModel
@@ -49,7 +49,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     private fun observeUserInfo() {
         mainViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
-            if (userInfo != GetUserResponse.User.defaultUser) {
+            if (userInfo != UserResponse.User.defaultUser) {
                 updateRecyclerView(
                     userInfo,
                     mainViewModel.friendsInfo.value ?: emptyList(),
@@ -62,7 +62,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         mainViewModel.friendsInfo.observe(viewLifecycleOwner) { friendList ->
             if (friendList.isNotEmpty()) {
                 updateRecyclerView(
-                    mainViewModel.userInfo.value ?: GetUserResponse.User.defaultUser,
+                    mainViewModel.userInfo.value ?: UserResponse.User.defaultUser,
                     friendList,
                 )
             }
@@ -70,8 +70,8 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun updateRecyclerView(
-        userInfo: GetUserResponse.User,
-        friendList: List<GetFriendsResponse.Data>,
+        userInfo: UserResponse.User,
+        friendList: List<FriendsResponse.Data>,
     ) {
         adapter.submitList(userInfo, friendList)
     }

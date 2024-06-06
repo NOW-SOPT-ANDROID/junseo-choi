@@ -1,11 +1,10 @@
 package com.sopt.now.data.remote.response
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GetFriendsResponse(
+data class FriendsResponse(
     @SerialName("page")
     val page: Int,
     @SerialName("per_page")
@@ -17,7 +16,7 @@ data class GetFriendsResponse(
     @SerialName("data")
     val `data`: List<Data>,
     @SerialName("support")
-    val support: Support
+    val support: Support,
 ) {
     @Serializable
     data class Data(
@@ -30,7 +29,7 @@ data class GetFriendsResponse(
         @SerialName("last_name")
         val lastName: String,
         @SerialName("avatar")
-        val avatar: String
+        val avatar: String,
     )
 
     @Serializable
@@ -38,6 +37,6 @@ data class GetFriendsResponse(
         @SerialName("url")
         val url: String,
         @SerialName("text")
-        val text: String
+        val text: String,
     )
 }

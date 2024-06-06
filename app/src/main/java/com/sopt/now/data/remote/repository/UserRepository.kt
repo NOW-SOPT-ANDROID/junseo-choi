@@ -2,7 +2,7 @@ package com.sopt.now.data.remote.repository
 
 import com.sopt.now.data.remote.request.ChangePasswordRequest
 import com.sopt.now.data.remote.response.ChangePasswordResponse
-import com.sopt.now.data.remote.response.GetUserResponse
+import com.sopt.now.data.remote.response.UserResponse
 import com.sopt.now.data.remote.service.UserService
 import retrofit2.Response
 import javax.inject.Inject
@@ -14,7 +14,7 @@ class UserRepository
     constructor(
         private val userService: UserService,
     ) {
-        suspend fun getUserInfo(userId: Int): Response<GetUserResponse> {
+        suspend fun getUserInfo(userId: Int): Response<UserResponse> {
             return userService.getUserInfo(userId)
         }
 

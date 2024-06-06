@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.sopt.now.data.remote.response.GetFriendsResponse
-import com.sopt.now.data.remote.response.GetUserResponse
+import com.sopt.now.data.remote.response.FriendsResponse
+import com.sopt.now.data.remote.response.UserResponse
 import com.sopt.now.databinding.ItemHomeFriendBinding
 import com.sopt.now.databinding.ItemHomeMineBinding
 
 class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(HomeDiffCallback()) {
-    private var myProfile: GetUserResponse.User = GetUserResponse.User.defaultUser
-    private var friends: List<GetFriendsResponse.Data> = emptyList()
+    private var myProfile: UserResponse.User = UserResponse.User.defaultUser
+    private var friends: List<FriendsResponse.Data> = emptyList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -47,12 +47,12 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
     }
 
     override fun getItemCount(): Int {
-        return friends.size + if (myProfile != GetUserResponse.User.defaultUser) MINE_PROFILE_COUNT else 0
+        return friends.size + if (myProfile != UserResponse.User.defaultUser) MINE_PROFILE_COUNT else 0
     }
 
     fun submitList(
-        myProfile: GetUserResponse.User,
-        friendList: List<GetFriendsResponse.Data>,
+        myProfile: UserResponse.User,
+        friendList: List<FriendsResponse.Data>,
     ) {
         this.myProfile = myProfile
         this.friends = friendList
@@ -62,7 +62,7 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
     class MineViewHolder private constructor(
         private val binding: ItemHomeMineBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: GetUserResponse.User) {
+        fun bind(item: UserResponse.User) {
             binding.apply {
                 this.item = item
                 executePendingBindings()
@@ -81,7 +81,7 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
     class FriendViewHolder private constructor(
         private val binding: ItemHomeFriendBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: GetFriendsResponse.Data) {
+        fun bind(item: FriendsResponse.Data) {
             binding.apply {
                 this.item = item
                 executePendingBindings()
@@ -98,9 +98,9 @@ class HomeAdapter : ListAdapter<HomeAdapter.HomeItem, RecyclerView.ViewHolder>(H
     }
 
     sealed class HomeItem {
-        data class Mine(val userInfo: GetUserResponse.User) : HomeItem()
+        data class Mine(val userInfo: UserResponse.User) : HomeItem()
 
-        data class FriendItem(val friend: GetFriendsResponse.Data) : HomeItem()
+        data class FriendItem(val friend: FriendsResponse.Data) : HomeItem()
     }
 
     class HomeDiffCallback : DiffUtil.ItemCallback<HomeItem>() {
