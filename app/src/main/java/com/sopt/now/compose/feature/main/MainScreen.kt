@@ -4,8 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.sopt.now.compose.feature.home.HomeScreen
 import com.sopt.now.compose.feature.myPage.MyPageScreen
@@ -48,12 +50,14 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
         route = Graph.Main.route,
     ) {
         composable(
-            route = Screen.MyPage.route,
+            route = Screen.MyPage.route + "/{userId}",
+            arguments = listOf(navArgument("userId") { type = NavType.IntType }),
         ) {
             MyPageScreen(navController = navController)
         }
         composable(
-            route = Screen.Home.route,
+            route = Screen.Home.route + "/{userId}",
+            arguments = listOf(navArgument("userId") { type = NavType.IntType }),
         ) {
             HomeScreen(navController = navController)
         }

@@ -1,7 +1,6 @@
 package com.sopt.now.compose.feature.signIn
 
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -16,6 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -28,59 +28,42 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModelProvider
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sopt.now.compose.R
 import com.sopt.now.compose.data.remote.request.SignInRequest
-import com.sopt.now.compose.feature.common.base.BaseFactory
-import com.sopt.now.compose.feature.main.MainViewModel
 import com.sopt.now.compose.model.Screen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 
 @Composable
-fun SignInScreen(navController: NavController) {
+fun SignInScreen(
+    navController: NavController,
+    signInViewModel: SignInViewModel = hiltViewModel(),
+) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
+    val signInMessage by signInViewModel.signInMessage.observeAsState()
+    var showMessage by remember { mutableStateOf<String?>(null) }
 
-    val signInViewModel =
-        ViewModelProvider(
-            context as ComponentActivity,
-            BaseFactory { SignInViewModel() },
-        )[SignInViewModel::class.java]
-
-    val mainViewModel =
-        ViewModelProvider(
-            context,
-            BaseFactory { MainViewModel() },
-        )[MainViewModel::class.java]
-
-    val signInMessage = signInViewModel.signInMessage.observeAsState()
-
-    signInMessage.value?.let {
-        if (it.split("/")[0] == SignInViewModel.SUCCESS_SIGN_IN) {
-            Toast.makeText(
-                context,
-                context.getString(R.string.sign_in_success),
-                Toast.LENGTH_SHORT,
-            ).show()
-            val userId = it.split("/")[1].toInt()
-            mainViewModel.getUserInfo(userId)
-            navController.navigate(Screen.Home.route)
-        } else {
-            ShowAnimationMessage(message = it)
+    LaunchedEffect(signInMessage) {
+        signInMessage?.let {
+            if (it.split("/")[0] == SignInViewModel.SUCCESS_SIGN_IN) {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.sign_in_success),
+                    Toast.LENGTH_SHORT,
+                ).show()
+                val userId = it.split("/")[1].toInt()
+                navController.navigate(Screen.Home.route + "/$userId")
+            } else {
+                showMessage = it
+            }
         }
     }
 
-    val isWeekSixthHomeworkFinished = signInViewModel.isWeekSixthHomeworkFinished.observeAsState()
-    isWeekSixthHomeworkFinished.value?.let {
-        if (it) {
-            Toast.makeText(
-                context,
-                context.getString(R.string.finish_week_sixth_homework),
-                Toast.LENGTH_SHORT,
-            ).show()
-        }
+    showMessage?.let {
+        ShowAnimationMessage(message = it)
     }
 
     Column(modifier = Modifier.padding(24.dp)) {
@@ -109,7 +92,6 @@ fun SignInScreen(navController: NavController) {
         Button(
             onClick = {
                 signInViewModel.performSignIn(SignInRequest(username, password))
-                signInViewModel.finishWeekSixthHomework()
             },
             modifier =
                 Modifier

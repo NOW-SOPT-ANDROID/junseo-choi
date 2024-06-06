@@ -1,6 +1,5 @@
 package com.sopt.now.compose.feature.home
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,28 +23,27 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModelProvider
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sopt.now.compose.data.remote.response.FriendsResponse
 import com.sopt.now.compose.data.remote.response.UserResponse
-import com.sopt.now.compose.feature.common.base.BaseFactory
 import com.sopt.now.compose.feature.main.MainViewModel
 
 @Composable
-fun HomeScreen(navController: NavController) {
-    val context = LocalContext.current
-
-    val mainViewModel =
-        ViewModelProvider(
-            context as ComponentActivity,
-            BaseFactory { MainViewModel() },
-        )[MainViewModel::class.java]
-
+fun HomeScreen(
+    navController: NavController,
+    mainViewModel: MainViewModel = hiltViewModel(),
+) {
+    val userId = navController.currentBackStackEntry?.arguments?.getInt("userId") ?: 0
     val userInfo = mainViewModel.userInfo.observeAsState(UserResponse.User.defaultUser).value
     val friends = mainViewModel.friendsInfo.observeAsState(emptyList()).value
 
+    LaunchedEffect(userId) {
+        mainViewModel.getUserInfo(userId)
+        mainViewModel.setUserId(userId)
+    }
     mainViewModel.getFriendsInfo()
 
     Scaffold(bottomBar = { BottomNav(navController = navController) }) { paddingValues ->
