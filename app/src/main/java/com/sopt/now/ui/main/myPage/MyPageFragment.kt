@@ -2,17 +2,18 @@ package com.sopt.now.ui.main.myPage
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.sopt.now.R
 import com.sopt.now.databinding.FragmentMyPageBinding
-import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.common.base.BindingFragment
 import com.sopt.now.ui.main.MainViewModel
 import com.sopt.now.ui.passwordChange.PasswordChangeActivity
 import com.sopt.now.ui.signIn.SignInActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
-    private lateinit var mainViewModel: MainViewModel
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onViewCreated(
         view: View,
@@ -20,16 +21,10 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupViewModel()
         setupDataBinding()
         setupPasswordChangeButtonListener()
         setupSignOutButtonListener()
         loadUserInfo()
-    }
-
-    private fun setupViewModel() {
-        val mainFactory = BaseFactory { MainViewModel() }
-        mainViewModel = ViewModelProvider(this, mainFactory)[MainViewModel::class.java]
     }
 
     private fun setupDataBinding() {

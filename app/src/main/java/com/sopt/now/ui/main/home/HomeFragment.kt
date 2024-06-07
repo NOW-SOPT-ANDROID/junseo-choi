@@ -2,17 +2,18 @@ package com.sopt.now.ui.main.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.sopt.now.R
-import com.sopt.now.data.remote.response.GetFriendsResponse
-import com.sopt.now.data.remote.response.GetUserResponse
+import com.sopt.now.data.remote.response.FriendsResponse
+import com.sopt.now.data.remote.response.UserResponse
 import com.sopt.now.databinding.FragmentHomeBinding
-import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.common.base.BindingFragment
 import com.sopt.now.ui.main.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
-    private lateinit var mainViewModel: MainViewModel
+    private val mainViewModel: MainViewModel by viewModels()
     private val adapter: HomeAdapter by lazy { HomeAdapter() }
 
     override fun onViewCreated(
@@ -21,18 +22,12 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupViewModel()
         setupDataBinding()
         setupAdapter()
         getUserInfo()
         getFriendsInfo()
         observeUserInfo()
         observeFriendsInfo()
-    }
-
-    private fun setupViewModel() {
-        val mainFactory = BaseFactory { MainViewModel() }
-        mainViewModel = ViewModelProvider(this, mainFactory)[MainViewModel::class.java]
     }
 
     private fun setupDataBinding() {
@@ -54,7 +49,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     private fun observeUserInfo() {
         mainViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
-            if (userInfo != GetUserResponse.User.defaultUser) {
+            if (userInfo != UserResponse.User.defaultUser) {
                 updateRecyclerView(
                     userInfo,
                     mainViewModel.friendsInfo.value ?: emptyList(),
@@ -67,7 +62,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         mainViewModel.friendsInfo.observe(viewLifecycleOwner) { friendList ->
             if (friendList.isNotEmpty()) {
                 updateRecyclerView(
-                    mainViewModel.userInfo.value ?: GetUserResponse.User.defaultUser,
+                    mainViewModel.userInfo.value ?: UserResponse.User.defaultUser,
                     friendList,
                 )
             }
@@ -75,8 +70,8 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun updateRecyclerView(
-        userInfo: GetUserResponse.User,
-        friendList: List<GetFriendsResponse.Data>,
+        userInfo: UserResponse.User,
+        friendList: List<FriendsResponse.Data>,
     ) {
         adapter.submitList(userInfo, friendList)
     }

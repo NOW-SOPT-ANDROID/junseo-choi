@@ -1,10 +1,10 @@
 package com.sopt.now.data.remote.response
 
-import com.sopt.now.data.remote.response.GetUserResponse.User.Companion.defaultUser
+import com.sopt.now.data.remote.response.UserResponse.User.Companion.defaultUser
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GetUserResponse(
+data class UserResponse(
     val code: Int,
     val message: String,
     val data: User? = defaultUser,

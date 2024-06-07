@@ -1,18 +1,24 @@
-package com.sopt.now.data
+package com.sopt.now.data.remote.di
 
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.sopt.now.BuildConfig
 import com.sopt.now.data.remote.service.AuthService
 import com.sopt.now.data.remote.service.FriendService
 import com.sopt.now.data.remote.service.UserService
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import javax.inject.Singleton
 
+@Module
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
     private const val CONTENT_TYPE = "application/json"
     private val json: Json =
@@ -34,19 +40,38 @@ object NetworkModule {
             .addInterceptor(getLogOkHttpClient())
             .build()
 
-    fun provideRetrofit(url: String): Retrofit {
+    @Singleton
+    @Provides
+    fun provideRetrofit(): Retrofit.Builder {
         return Retrofit.Builder()
-            .baseUrl(url)
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(CONTENT_TYPE.toMediaType()))
-            .build()
     }
 
-    inline fun <reified T> create(url: String): T = provideRetrofit(url).create<T>(T::class.java)
-}
+    @Singleton
+    @Provides
+    fun provideAuthService(
+        retrofitBuilder: Retrofit.Builder,
+        @AuthBaseUrl url: String,
+    ): AuthService {
+        return retrofitBuilder.baseUrl(url).build().create(AuthService::class.java)
+    }
 
-object ServicePool {
-    val authService = NetworkModule.create<AuthService>(BuildConfig.AUTH_BASE_URL)
-    val userService = NetworkModule.create<UserService>(BuildConfig.AUTH_BASE_URL)
-    val friendService = NetworkModule.create<FriendService>(BuildConfig.FRIEND_BASE_URL)
+    @Singleton
+    @Provides
+    fun provideUserService(
+        retrofitBuilder: Retrofit.Builder,
+        @AuthBaseUrl url: String,
+    ): UserService {
+        return retrofitBuilder.baseUrl(url).build().create(UserService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFriendService(
+        retrofitBuilder: Retrofit.Builder,
+        @FriendBaseUrl url: String,
+    ): FriendService {
+        return retrofitBuilder.baseUrl(url).build().create(FriendService::class.java)
+    }
 }

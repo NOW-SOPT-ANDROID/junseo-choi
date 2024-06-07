@@ -4,33 +4,27 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
 import com.sopt.now.data.remote.request.ChangePasswordRequest
 import com.sopt.now.databinding.ActivityPasswordChangeBinding
-import com.sopt.now.ui.common.base.BaseFactory
 import com.sopt.now.ui.common.base.BindingActivity
 import com.sopt.now.ui.passwordChange.PasswordChangeViewModel.Companion.SUCCESS_PASSWORD_CHANGE
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PasswordChangeActivity :
     BindingActivity<ActivityPasswordChangeBinding>(R.layout.activity_password_change) {
-    private lateinit var passwordChangeViewModel: PasswordChangeViewModel
+    private val passwordChangeViewModel: PasswordChangeViewModel by viewModels()
     private var userId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setupViewModel()
         getUserId()
         setupSignInButtonListener()
         observeSignInResult()
-    }
-
-    private fun setupViewModel() {
-        val passwordChangeFactory = BaseFactory { PasswordChangeViewModel() }
-        passwordChangeViewModel =
-            ViewModelProvider(this, passwordChangeFactory)[PasswordChangeViewModel::class.java]
     }
 
     private fun getUserId() {
